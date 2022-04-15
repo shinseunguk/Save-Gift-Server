@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LoginMapper">
+
+	<select id="selectNow" resultType="String"><!-- VO오류 발생  -->
+		SELECT NOW()
+	</select>
+	
+	<!-- 회원가입mapper -->
+	<insert id="register" parameterType="hashMap">
+		INSERT INTO USER 
+		VALUES(#{user_id},#{user_password},#{name},#{phone_number},0,#{push_yn},#{email_yn},#{sms_yn}, NOW())
+	</insert>
+	
+	<select id="duplicationid" resultType="com.savegift.login.LoginVO">
+		SELECT * FROM
+		USER
+		WHERE user_id = #{user_id}
+	</select>
+	
+	<select id="login" resultType="com.savegift.login.LoginVO">
+		SELECT * FROM
+		USER
+		WHERE user_id = #{user_id}
+		AND user_password = #{user_password} 	
+	</select>
+	
+	<select id="passwordCrossCheck" resultType="String">
+		SELECT user_password FROM
+		USER
+		WHERE user_id = #{user_id} 	
+	</select>
+	
+	<select id="findemail" resultType="com.savegift.login.LoginVO">
+		SELECT * FROM
+		USER
+		WHERE user_id = #{user_id}
+	</select>
+	
+	<select id="findphone" resultType="com.savegift.login.LoginVO">
+		SELECT * FROM
+		USER
+		WHERE phone_number = #{phone_number}
+	</select>
+	
+	<select id="addFriend" resultType="com.savegift.login.FriendVO" parameterType="String">
+		SELECT * FROM
+		FRIEND
+		WHERE user_id = #{user_id}
+	</select>
+	
+	<select id="addFriendOpponent" resultType="com.savegift.login.FriendVO" parameterType="String">
+		SELECT * FROM
+		FRIEND
+		WHERE user_id = #{friendOrigin}
+	</select>
+	
+	<select id="getRequestFriend" resultType="com.savegift.login.FriendVO" parameterType="String">
+		SELECT * FROM
+		FRIEND_WAIT
+		WHERE user_id = #{user_id}
+	</select>
+	
+	<select id="getRequestedFriend" resultType="com.savegift.login.FriendVO" parameterType="String">
+		SELECT * FROM
+		FRIEND_WAIT
+		WHERE friend = #{user_id}
+	</select>
+	
+	<insert id="addFriendInsert">
+		INSERT INTO FRIEND
+		VALUES (#{user_id}, #{friend})
+	</insert>
+	
+	<update id="addFriendUpdate">
+		UPDATE FRIEND
+		SET friend = #{friend}
+		WHERE user_id = #{user_id}
+	</update>
+	
+	<select id="addFriendWait" resultType="com.savegift.login.FriendVO" parameterType="String">
+		SELECT * FROM
+		FRIEND_WAIT
+		WHERE user_id = #{user_id}
+		AND friend = #{friend}
+	</select>
+	
+	<select id="addFriendWait2" resultType="com.savegift.login.FriendVO" parameterType="String">
+		SELECT * FROM
+		FRIEND_WAIT
+		WHERE user_id = #{friend}
+		AND friend = #{user_id}
+	</select>
+	
+	<insert id="addFriendInsertWait">
+		INSERT INTO FRIEND_WAIT
+		VALUES (#{user_id}, #{friend}, 'W')
+	</insert>
+	
+	<update id="addFriendUpdateWait">
+		UPDATE FRIEND_WAIT
+		SET friend = #{friend}
+		WHERE user_id = #{user_id}
+	</update>
+	
+	<delete id="deleteFriendWait">
+		DELETE FROM FRIEND_WAIT
+		<!-- WHERE user_id = #{user_id}
+		AND friend = #{friend} -->
+		WHERE user_id = #{friend}
+		AND friend = #{user_id}
+	</delete>
+	
+	<delete id="deleteFriendWaitMe">
+		DELETE FROM FRIEND_WAIT
+		WHERE user_id = #{user_id}
+		AND friend = #{friend}
+	</delete>
+	
+	
+	
+</mapper>
