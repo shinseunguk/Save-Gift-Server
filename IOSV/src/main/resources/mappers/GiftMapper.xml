@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="GiftMapper">
+
+	<!-- //TEST -->
+	<select id="test" resultType="String">
+		SELECT NOW()
+	</select>
+	
+	<insert id="registerGift" parameterType="hashMap">
+		INSERT INTO GIFTCON(user_id, img_url, brand, barcode_number, expiration_period, registration_date, use_yn, share_party_name, device_id, registrant, product_name, img_local_url) 
+		VALUES(#{user_id}, #{img_url}, #{brand}, #{barcode_number}, #{expiration_period}, #{registration_date}, #{use_yn}, #{share_party_name}, #{device_id}, #{registrant}, #{product_name}, #{img_local_url})
+	</insert>
+	
+	<select id="overlapPhoto" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE img_local_url = #{img_local_url}
+	</select>
+	
+	
+	<!-- <select id="addFriendWait2" resultType="com.savegift.login.FriendVO" parameterType="String">
+		SELECT * FROM
+		FRIEND_WAIT
+		WHERE user_id = #{friend}
+		AND friend = #{user_id}
+	</select>
+	
+	<insert id="addFriendInsertWait">
+		INSERT INTO FRIEND_WAIT
+		VALUES (#{user_id}, #{friend}, 'W')
+	</insert>
+	
+	<update id="addFriendUpdateWait">
+		UPDATE FRIEND_WAIT
+		SET friend = #{friend}
+		WHERE user_id = #{user_id}
+	</update>
+	
+	
+	<delete id="deleteFriendWaitMe">
+		DELETE FROM FRIEND_WAIT
+		WHERE user_id = #{user_id}
+		AND friend = #{friend}
+	</delete> -->
+	
+	
+	
+</mapper>
