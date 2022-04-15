@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
- * Handles requests for the application home page.
+ * Handles requests for the application home page. 
+ * Git Commit Test
  */
 @Controller
 public class LoginController {
