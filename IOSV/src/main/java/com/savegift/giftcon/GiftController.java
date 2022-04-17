@@ -1,5 +1,7 @@
 package com.savegift.giftcon;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.util.Date;
@@ -9,16 +11,21 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 
 /**
@@ -29,6 +36,8 @@ public class GiftController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(GiftController.class);
 	
+	String downPath = "/Users/ukbook/git/Save-Gift-Server/IOSV/src/main/webapp/upload";
+	
 	@Autowired
 	GiftService giftService;
 	
@@ -38,6 +47,55 @@ public class GiftController {
 	public void duplicationid(){
 		logger.info("asdfasdf");
 		giftService.duplicationid();
+	}
+	
+	@RequestMapping(value = "/register/image",
+			method = RequestMethod.POST,
+			consumes = MediaType.MULTIPART_FORM_DATA_VALUE, //수신
+			produces = MediaType.APPLICATION_JSON_VALUE //송신
+			)
+	@ResponseBody
+	public String registerImage(@RequestParam HashMap<String, Object> requestMap, MultipartHttpServletRequest request) throws IOException {
+		
+		String fileName = (String) requestMap.get("file_name");
+		logger.info("fileName ----------> "+fileName);
+		
+//		logger.info("request.tostring() -------> "+request);
+		
+		
+		MultipartFile file = request.getFile("photo");
+		
+		if(file != null) {
+			logger.info("file is not null");
+			
+			//저장 받은 파일의 확장명을 가져온다.
+			String fileExtensions = FilenameUtils.getExtension(file.getOriginalFilename());
+			logger.info("fileExtensions ----------> "+fileExtensions);
+			
+			//저장 파일명을 정의한다.
+			String saveFileName = String.format(fileName+"."+fileExtensions);
+			logger.info("saveFileName ----------> "+saveFileName);
+			
+			// 파일생성 
+		    //파일 저장경로, 저장파일 이름
+			File saveFile = new File(downPath, saveFileName);
+		    file.transferTo(saveFile);
+		    
+		  //파일 생성 여부 체크
+		    if(saveFile.exists()) {
+		    	//파일 체크 가능한 log 이용하기
+		    	logger.info("파일생성 완료");
+		    }else {
+		    	logger.info("파일생성 실패");
+		    }
+		}else {
+			logger.info("file is null");
+		}
+		logger.info("/register/image -------> " + requestMap.toString());
+		
+//		resultBool = giftService.registerGift(requestMap);
+		
+		return "successaaaaaaaaaaaaaaaa";
 	}
 	
 	@RequestMapping(value = "/register/gift", method = RequestMethod.POST , produces = "application/json")

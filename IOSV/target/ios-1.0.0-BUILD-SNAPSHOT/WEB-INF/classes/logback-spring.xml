@@ -2,7 +2,7 @@
 <configuration debug="true">
 
 	<!-- Appenders -->
-	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+	<!-- <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<Pattern>%d %5p [%c] %m%n</Pattern>
 		</encoder>
@@ -12,7 +12,12 @@
 		<encoder>
 			<Pattern>%d %5p %m%n</Pattern>
 		</encoder>
-	</appender>
+	</appender> -->
+	 <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+   <layout class="ch.qos.logback.classic.PatternLayout">
+     <Pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{36} - %msg%n</Pattern>
+   </layout>
+ </appender>
 
 	<!-- Logger -->
 	<logger name="com.savegift" level="DEBUG" appender-ref="console" />
@@ -20,7 +25,7 @@
 	<logger name="jdbc.resultsettable" level="INFO" appender-ref="console-infolog" />
 
 	<!-- Root Logger -->
-	<root level="off">
+	<root level="trace">
 		<appender-ref ref="console" />
 	</root>
 </configuration>

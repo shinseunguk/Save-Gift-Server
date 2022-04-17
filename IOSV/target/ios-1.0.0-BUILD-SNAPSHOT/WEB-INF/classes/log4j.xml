@@ -41,38 +41,36 @@
 	</logger>
 	
 	<!-- SQL Logger -->
-
-	<!-- SQL Logger -->
 	<!--  SQL문과 해당 SQL을 실행시키는데 수행된 시간 정보(milliseconds) -->
-	<logger name="jdbc.sqltiming" additivity="false">
-	    <level value="OFF" />
+	<logger name="jdbc.sqltiming" level="OFF">
+	    <level value="off" />
 	    <appender-ref ref="console"/> 
 	</logger>
-	<!--  SQL 쿼리 문장 -->
 	<logger name="jdbc.sqlonly" additivity="false"> 
 	    <level value="info"/> 
 	    <appender-ref ref="console"/> 
 	</logger>
 	 
-	<!--  ResultSet을 제외한 모든 JDBC 호출 정보 -->
-	<logger name="jdbc.audit" additivity="false"> 
-	    <level value="OFF"/>  
+	<logger name="jdbc.audit" level="OFF"> 
+	    <level value="off"/>  
 	    <appender-ref ref="console"/> 
 	</logger> 
 	 
-	<!--  ResultSet을 포함한 모든 JDBC 호출 정보 -->
 	<logger name="jdbc.resultset" additivity="false">
-	    <level value="OFF" />
+	    <level value="off" />
 	    <appender-ref ref="console"/> 
 	</logger>
 	 
-	<!-- SQL 결과 조회된 데이터의 table을 로그 -->
 	<logger name="jdbc.resultsettable" additivity="false"> 
-	    <level value="OFF"/>  
+	    <level value="off"/>  
 	    <appender-ref ref="console"/> 
 	</logger> 
-
-
+	
+	<logger name="jdbc.connection" additivity="false"> 
+	    <level value="off"/>  
+	    <appender-ref ref="console"/> 
+	</logger> 
+	
 	<!-- Root Logger -->
 	<root>
 		<priority value="warn" />
