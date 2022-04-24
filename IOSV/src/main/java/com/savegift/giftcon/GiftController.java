@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -56,9 +57,12 @@ public class GiftController {
 			)
 	@ResponseBody
 	public String registerImage(@RequestParam HashMap<String, Object> requestMap, MultipartHttpServletRequest request) throws IOException {
+		boolean resultBool = false;
 		
+		logger.info("/register/gift -------> " + requestMap.toString());
+        
 		String fileName = (String) requestMap.get("file_name");
-		logger.info("fileName ----------> "+fileName);
+//		logger.info("fileName ----------> "+fileName);
 		
 //		logger.info("request.tostring() -------> "+request);
 		
@@ -70,11 +74,21 @@ public class GiftController {
 			
 			//저장 받은 파일의 확장명을 가져온다.
 			String fileExtensions = FilenameUtils.getExtension(file.getOriginalFilename());
-			logger.info("fileExtensions ----------> "+fileExtensions);
+//			logger.info("fileExtensions ----------> "+fileExtensions);
 			
 			//저장 파일명을 정의한다.
 			String saveFileName = String.format(fileName+"."+fileExtensions);
 			logger.info("saveFileName ----------> "+saveFileName);
+			
+			requestMap.put("img_url", saveFileName);
+			
+	        resultBool = giftService.registerGift(requestMap);
+	        
+	        if(resultBool) {
+	        	logger.info("DB insert 성공");
+	        }else {
+	        	logger.info("DB insert 실패");
+	        }
 			
 			// 파일생성 
 		    //파일 저장경로, 저장파일 이름
@@ -95,18 +109,20 @@ public class GiftController {
 		
 //		resultBool = giftService.registerGift(requestMap);
 		
-		return "successaaaaaaaaaaaaaaaa";
+		return "success";
 	}
 	
-	@RequestMapping(value = "/register/gift", method = RequestMethod.POST , produces = "application/json")
+	@RequestMapping(value = "/gift/save", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
-	public boolean registerGift(@RequestBody HashMap<String, Object> requestMap){
-		boolean resultBool = false;
-        logger.info("/register/gift -------> " + requestMap.toString());
+	public List<GiftVO> registerGift(@RequestBody HashMap<String, Object> requestMap){
+		List<GiftVO> list = null;
+		list = giftService.giftSave(requestMap);
+		
+		for(int i = 0; i < list.size() ; i++) {
+			logger.info("list"+ i +"--> " + list.get(i).toString());
+		}
         
-        resultBool = giftService.registerGift(requestMap);
-        
-        return resultBool;
+        return list;
 	}
 	
 	@RequestMapping(value = "/overlap/photo", method = RequestMethod.POST , produces = "application/json")

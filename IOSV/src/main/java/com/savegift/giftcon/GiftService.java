@@ -2,11 +2,6 @@ package com.savegift.giftcon;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,5 +29,10 @@ public class GiftService {
 //	//기프티콘 중복체크 
 	public int overlapPhoto(HashMap<String, Object> requestMap) {
 		return giftDAO.overlapPhoto(requestMap);
+	}
+	
+//	//기프티콘 불러오기 
+	public List<GiftVO> giftSave(HashMap<String, Object> requestMap) {
+		return giftDAO.giftSave(requestMap);
 	}
 }
