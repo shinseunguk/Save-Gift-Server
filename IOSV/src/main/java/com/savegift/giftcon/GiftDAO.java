@@ -1,6 +1,7 @@
 package com.savegift.giftcon;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -26,7 +27,11 @@ public class GiftDAO {
 	public boolean registerGift(HashMap<String, Object> requestMap) {
 		int result = mybatis.insert("GiftMapper.registerGift", requestMap);
 		
-		return true;
+		if(result == 1) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	public int overlapPhoto(HashMap<String, Object> requestMap) {
@@ -40,6 +45,51 @@ public class GiftDAO {
 		
 		
 		return result;
+	}
+	
+	public List<GiftVO> giftSave(HashMap<String, Object> requestMap) {
+		List<GiftVO> list = null;
+		logger.info("giftSave --------> \n" + requestMap.toString());
+//		mybatis.selectList("GiftMapper.overlapPhoto", requestMap);
+		
+		String index = (String) requestMap.get("index");
+		String use_yn = (String) requestMap.get("use_yn");
+        logger.info("index -------> "+ index);
+        logger.info("use_yn -------> "+ use_yn);
+		
+		if(!index.contains("blogin")) { // 로그인
+			String user_id = (String) requestMap.get("user_id");
+			logger.info("해당 아이디로 select -----> " + user_id);
+        	
+        	if(use_yn.equals("All")){
+        		logger.info("로그인 All");
+        		list = mybatis.selectList("GiftMapper.giftSaveAllLogin", requestMap);
+        	}else if(use_yn.equals("Unused")) {
+        		logger.info("로그인 Unused");
+        		list = mybatis.selectList("GiftMapper.giftSaveUnUsedLogin", requestMap);
+        	}else if(use_yn.equals("Used")) {
+        		logger.info("로그인 Used");
+        		list = mybatis.selectList("GiftMapper.giftSaveUsedLogin", requestMap);
+        	}
+        	
+        }else { // 비로그인
+        	String device_id = (String) requestMap.get("device_id");
+        	logger.info("해당 디바이스 아이디로 select -----> " + device_id);
+        	
+        	if(use_yn.equals("All")){
+        		logger.info("비로그인 All");
+        		list = mybatis.selectList("GiftMapper.giftSaveAllBLogin", requestMap);
+        	}else if(use_yn.equals("Unused")) {
+        		logger.info("비로그인 Unused");
+        		list = mybatis.selectList("GiftMapper.giftSaveUnUsedBLogin", requestMap);
+        	}else if(use_yn.equals("Used")) {
+        		logger.info("비로그인 Used");
+        		list = mybatis.selectList("GiftMapper.giftSaveUsedBLogin", requestMap);
+        	}
+        	
+        }
+		
+		return list;
 	}
 	
 }

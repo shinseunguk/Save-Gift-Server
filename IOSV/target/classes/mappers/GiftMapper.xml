@@ -18,6 +18,45 @@
 		WHERE img_local_url = #{img_local_url}
 	</select>
 	
+	<select id="giftSaveUsedLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 1
+		AND user_id = #{user_id}
+	</select>
+	
+	<select id="giftSaveUnUsedLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 0
+		AND user_id = #{user_id}
+	</select>
+	
+	<select id="giftSaveAllLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE user_id = #{user_id}
+	</select>
+	
+	<select id="giftSaveUsedBLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 1
+		AND device_id = #{device_id}
+	</select>
+	
+	<select id="giftSaveUnUsedBLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 0
+		AND device_id = #{device_id}
+	</select>
+	
+	<select id="giftSaveAllBLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE device_id = #{device_id}
+	</select>
 	
 	<!-- <select id="addFriendWait2" resultType="com.savegift.login.FriendVO" parameterType="String">
 		SELECT * FROM

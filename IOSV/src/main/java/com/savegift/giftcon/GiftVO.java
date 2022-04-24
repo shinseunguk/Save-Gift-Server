@@ -5,7 +5,7 @@ import java.sql.Date;
 public class GiftVO {
 	private int seq;
 	private String user_id;
-	private String img_rul;
+	private String img_url;
 	private String brand;
 	private String barcode_number;
 	private Date expiration_period;
@@ -27,11 +27,11 @@ public class GiftVO {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	public String getImg_rul() {
-		return img_rul;
+	public String getImg_url() {
+		return img_url;
 	}
-	public void setImg_rul(String img_rul) {
-		this.img_rul = img_rul;
+	public void setImg_url(String img_url) {
+		this.img_url = img_url;
 	}
 	public String getBrand() {
 		return brand;
@@ -87,7 +87,6 @@ public class GiftVO {
 	public void setImg_local_url(String img_local_url) {
 		this.img_local_url = img_local_url;
 	}
-	
 	
 	
 }
