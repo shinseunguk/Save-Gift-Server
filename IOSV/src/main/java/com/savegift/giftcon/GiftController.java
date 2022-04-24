@@ -125,6 +125,15 @@ public class GiftController {
         return list;
 	}
 	
+	@RequestMapping(value = "/gift/detail", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public List<GiftVO> giftDetail(@RequestBody HashMap<String, Object> requestMap){
+		logger.info("requestMap... " + requestMap.toString());
+		List<GiftVO> list = giftService.giftDetail(requestMap);;
+		
+		return list;
+	}
+	
 	@RequestMapping(value = "/overlap/photo", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
 	public int overlapPhoto(@RequestBody HashMap<String, Object> requestMap){

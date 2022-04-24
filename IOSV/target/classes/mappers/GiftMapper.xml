@@ -58,31 +58,12 @@
 		WHERE device_id = #{device_id}
 	</select>
 	
-	<!-- <select id="addFriendWait2" resultType="com.savegift.login.FriendVO" parameterType="String">
+	<!-- Gift Detail  -->
+	<select id="giftDetail" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT * FROM
-		FRIEND_WAIT
-		WHERE user_id = #{friend}
-		AND friend = #{user_id}
+		GIFTCON
+		WHERE seq = #{seq}
 	</select>
-	
-	<insert id="addFriendInsertWait">
-		INSERT INTO FRIEND_WAIT
-		VALUES (#{user_id}, #{friend}, 'W')
-	</insert>
-	
-	<update id="addFriendUpdateWait">
-		UPDATE FRIEND_WAIT
-		SET friend = #{friend}
-		WHERE user_id = #{user_id}
-	</update>
-	
-	
-	<delete id="deleteFriendWaitMe">
-		DELETE FROM FRIEND_WAIT
-		WHERE user_id = #{user_id}
-		AND friend = #{friend}
-	</delete> -->
-	
 	
 	
 </mapper>
