@@ -92,4 +92,16 @@ public class GiftDAO {
 		return list;
 	}
 	
+	public List<GiftVO> giftDetail(HashMap<String, Object> requestMap) {
+		List<GiftVO> list = null;
+		logger.info("giftDetail --------> \n" + requestMap.toString());
+//		mybatis.selectList("GiftMapper.overlapPhoto", requestMap);
+		
+		list = mybatis.selectList("GiftMapper.giftDetail", requestMap);
+		
+			
+		
+		return list;
+	}
+	
 }

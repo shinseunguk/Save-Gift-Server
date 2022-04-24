@@ -35,4 +35,9 @@ public class GiftService {
 	public List<GiftVO> giftSave(HashMap<String, Object> requestMap) {
 		return giftDAO.giftSave(requestMap);
 	}
+	
+//	//기프티콘 디테일 
+	public List<GiftVO> giftDetail(HashMap<String, Object> requestMap) {
+		return giftDAO.giftDetail(requestMap);
+	}
 }
