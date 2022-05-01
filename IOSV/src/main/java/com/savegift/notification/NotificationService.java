@@ -26,4 +26,8 @@ public class NotificationService {
 	public String version() {
 		return notificaitionDAO.version();
 	}
+	
+	public boolean deviceInsert(HashMap<String, Object> requestMap){
+		return notificaitionDAO.deviceInsert(requestMap);
+	}
 }

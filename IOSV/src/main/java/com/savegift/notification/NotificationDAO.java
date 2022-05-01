@@ -55,4 +55,30 @@ public class NotificationDAO {
 		return result;
 	}
 	
+	public boolean deviceInsert(HashMap<String, Object> requestMap) {
+		boolean resultBool = false;
+		String device_model = (String) requestMap.get("device_model");
+		String device_id = (String) requestMap.get("device_id");
+		String push_token = (String) requestMap.get("push_token");
+		int push_yn = (Integer) requestMap.get("push_yn");
+		int push30 = (Integer) requestMap.get("push30");
+		int push7 = (Integer) requestMap.get("push7");
+		int push1 = (Integer)requestMap.get("push1");
+		
+		
+		NotificationVO notificationVO = mybatis.selectOne("NotificationMapper.userDevice", device_id);
+		if(notificationVO == null) {
+			logger.info("DB insert {"+device_id+"} --> token["+push_token+"]");
+			int result = mybatis.insert("NotificationMapper.userDeviceInsert", requestMap);
+			
+			if(result == 1) {
+				resultBool = true;	
+			}else {
+				resultBool = false;
+			}
+		}
+		
+		return resultBool;
+	}
+	
 }

@@ -58,4 +58,7 @@ public class LoginService {
 	public FriendVO getFriend(String user_id) {
 		return loginDAO.getFriend(user_id);
 	}
+	public boolean secession(String user_id) {
+		return loginDAO.secession(user_id);
+	}
 }

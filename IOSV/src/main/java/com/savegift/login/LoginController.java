@@ -365,4 +365,15 @@ public class LoginController {
 		return friendVO;
 	}
 	
+	
+	@RequestMapping(value = "/secession", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public boolean secession(@RequestBody HashMap<String, Object> requestMap){
+		boolean result = false;
+		
+		String user_id = (String) requestMap.get("user_id");
+		result = loginService.secession(user_id);
+		
+		return true;
+	}
 }

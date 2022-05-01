@@ -117,6 +117,29 @@
 		AND friend = #{friend}
 	</delete>
 	
+	<delete id="secessionFriend">
+		DELETE FROM FRIEND
+		WHERE user_id = #{user_id}
+	</delete>
 	
+	<delete id="secessionFriendWait">
+		DELETE FROM FRIEND_WAIT
+		WHERE user_id = #{user_id}
+	</delete>
+	
+	<delete id="secessionGiftcon">
+		DELETE FROM GIFTCON
+		WHERE user_id = #{user_id}
+	</delete>
+	
+	<delete id="secessionUser">
+		DELETE FROM USER
+		WHERE user_id = #{user_id}
+	</delete>
+	
+	<delete id="secessionUserDevice">
+		DELETE FROM USER_DEVICE
+		WHERE user_id = #{user_id}
+	</delete>
 	
 </mapper>
