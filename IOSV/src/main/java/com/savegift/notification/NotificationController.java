@@ -63,6 +63,25 @@ public class NotificationController {
 		return result;
 	}
 	
+	
+	@RequestMapping(value = "/device/insert", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public boolean deviceInsert(@RequestBody HashMap<String, Object> requestMap){
+		boolean result = false;
+		logger.info("notification/device/insert..");
+//		String user_id = request.getParameter("device_model");
+//		String user_id = request.getParameter("device_id");
+//		String user_id = request.getParameter("push_token");
+//		String user_id = request.getParameter("push_yn");
+//		String user_id = request.getParameter("push30");
+//		String user_id = request.getParameter("push7");
+//		String user_id = request.getParameter("push1");
+		
+		result = notificationService.deviceInsert(requestMap);
+		
+		return true;
+	}
+	
 //	@RequestMapping(value = "notification/status", method = RequestMethod.GET)
 //	@ResponseBody
 //	public List<LoginDAO> status(@RequestBody HashMap<String, Object> requestMap){

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="NotificationMapper">
+
 	<select id="status" resultType="com.savegift.login.LoginVO">
 		SELECT name ,push_yn, email_yn, sms_yn  
 		FROM USER
 		WHERE user_id = #{user_id}
 	</select>
+	
 	<update id="notiSetting" parameterType="hashMap">
 		UPDATE USER
 		SET 
@@ -15,8 +17,29 @@
 		WHERE
 		user_id = #{user_id}
 	</update>
+	
 	<select id="version" resultType="String">
 	SELECT MAX(version)  
 	FROM version
 	</select>
+	
+	<select id="userDevice" resultType="com.savegift.notification.NotificationVO" parameterType="String">
+		SELECT *  
+		FROM USER_DEVICE
+		WHERE device_id = #{device_id}
+	</select>
+	
+	<select id="userDeviceUserId" resultType="com.savegift.notification.NotificationVO" parameterType="String">
+		SELECT *  
+		FROM USER_DEVICE
+		WHERE user_id = #{user_id}
+	</select>
+	
+	<insert id="userDeviceInsert" parameterType="hashMap">
+		INSERT INTO
+		USER_DEVICE
+		(device_model, device_id, push_token, push_yn, push30, push7, push1)
+		VALUES(#{device_model}, #{device_id}, #{push_token}, #{push_yn}, #{push30}, #{push7}, #{push1})
+	</insert>
+	
 </mapper>

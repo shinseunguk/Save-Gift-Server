@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.savegift.giftcon.GiftVO;
+import com.savegift.notification.NotificationVO;
+
 @Repository
 public class LoginDAO {
 	
@@ -259,4 +262,20 @@ public class LoginDAO {
 		return friendVO;
 	}
 	
+	public boolean secession(String user_id) {
+		boolean result = true;
+		
+		//friend
+			mybatis.delete("LoginMapper.secessionFriend", user_id);
+		//friend_wait
+			mybatis.delete("LoginMapper.secessionFriendWait", user_id);
+		//giftcon
+			mybatis.delete("LoginMapper.secessionGiftcon", user_id);
+		//user
+			mybatis.delete("LoginMapper.secessionUser", user_id);
+		//user_device
+			mybatis.delete("LoginMapper.secessionUserDevice", user_id);
+		
+		return result;
+	}	
 }
