@@ -43,11 +43,22 @@ public class NotificationController {
 		return loginvo;
 	}
 	
+	@RequestMapping(value = "/status2", method = RequestMethod.GET)
+	@ResponseBody
+	public NotificationVO status2(HttpServletRequest request){
+		logger.info("notification/status..");
+		String device_id = request.getParameter("device_id");
+		logger.info("device_id... " + device_id);
+		
+		NotificationVO notificationVO = notificationService.status2(device_id);
+		
+		return notificationVO;
+	}
+	
 	@RequestMapping(value = "/notisetting", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
 	public boolean notiSetting(@RequestBody HashMap<String, Object> requestMap){
 		boolean result = false;
-		
 		result = notificationService.notiSetting(requestMap);
 		
         

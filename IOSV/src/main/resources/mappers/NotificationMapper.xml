@@ -8,10 +8,26 @@
 		WHERE user_id = #{user_id}
 	</select>
 	
-	<update id="notiSetting" parameterType="hashMap">
-		UPDATE USER
+	<select id="status2" resultType="com.savegift.notification.NotificationVO">
+		SELECT *  
+		FROM USER_DEVICE
+		WHERE device_id = #{device_id}
+	</select>
+	
+	<update id="notiSetting1" parameterType="hashMap">
+		UPDATE USER_DEVICE
 		SET 
 		push_yn = #{push_yn},
+		push30 = #{push30},
+		push7 = #{push7},
+		push1 = #{push1}
+		WHERE
+		device_id = #{device_id}
+	</update>
+	
+	<update id="notiSetting2" parameterType="hashMap">
+		UPDATE USER
+		SET 
 		email_yn = #{email_yn},
 		sms_yn = #{sms_yn}
 		WHERE
@@ -19,8 +35,8 @@
 	</update>
 	
 	<select id="version" resultType="String">
-	SELECT MAX(version)  
-	FROM version
+		SELECT MAX(version)  
+		FROM version
 	</select>
 	
 	<select id="userDevice" resultType="com.savegift.notification.NotificationVO" parameterType="String">
