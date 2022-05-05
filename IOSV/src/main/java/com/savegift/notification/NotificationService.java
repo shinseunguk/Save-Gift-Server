@@ -19,6 +19,10 @@ public class NotificationService {
 		return notificaitionDAO.status(user_id);
 	}
 	
+	public NotificationVO status2(String device_id){
+		return notificaitionDAO.status2(device_id);
+	}
+	
 	public boolean notiSetting(HashMap<String, Object> requestMap){
 		return notificaitionDAO.notiSetting(requestMap);
 	}
