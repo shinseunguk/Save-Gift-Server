@@ -18,44 +18,188 @@
 		WHERE img_local_url = #{img_local_url}
 	</select>
 	
-	<select id="giftSaveUsedLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUsedLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT seq, brand, expiration_period, product_name, img_url FROM
 		GIFTCON
 		WHERE use_yn = 1
 		AND user_id = #{user_id}
+		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftSaveUnUsedLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUsedLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 1
+		AND user_id = #{user_id}
+		ORDER BY expiration_period ASC
+	</select>
+	
+	<select id="giftSaveUsedLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 1
+		AND user_id = #{user_id}
+		ORDER BY product_name ASC
+	</select>
+	
+	<select id="giftSaveUsedLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 1
+		AND user_id = #{user_id}
+		ORDER BY brand ASC
+	</select>
+	
+	<select id="giftSaveUnUsedLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT seq, brand, expiration_period, product_name, img_url FROM
 		GIFTCON
 		WHERE use_yn = 0
 		AND user_id = #{user_id}
+		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftSaveAllLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUnUsedLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 0
+		AND user_id = #{user_id}
+		ORDER BY expiration_period ASC
+	</select>
+	
+	<select id="giftSaveUnUsedLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 0
+		AND user_id = #{user_id}
+		ORDER BY product_name ASC
+	</select>
+	
+	<select id="giftSaveUnUsedLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 0
+		AND user_id = #{user_id}
+		ORDER BY brand ASC
+	</select>
+	
+	<select id="giftSaveAllLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT seq, brand, expiration_period, product_name, img_url FROM
 		GIFTCON
 		WHERE user_id = #{user_id}
+		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftSaveUsedBLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveAllLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE user_id = #{user_id}
+		ORDER BY expiration_period ASC
+	</select>
+	
+	<select id="giftSaveAllLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE user_id = #{user_id}
+		ORDER BY product_name ASC
+	</select>
+	
+	<select id="giftSaveAllLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE user_id = #{user_id}
+		ORDER BY brand ASC
+	</select>
+	
+	<select id="giftSaveUsedBLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT seq, brand, expiration_period, product_name, img_url FROM
 		GIFTCON
 		WHERE use_yn = 1
 		AND device_id = #{device_id}
+		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftSaveUnUsedBLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUsedBLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 1
+		AND device_id = #{device_id}
+		ORDER BY expiration_period ASC
+	</select>
+	
+	<select id="giftSaveUsedBLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 1
+		AND device_id = #{device_id}
+		ORDER BY product_name ASC
+	</select>
+	
+	<select id="giftSaveUsedBLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 1
+		AND device_id = #{device_id}
+		ORDER BY brand ASC
+	</select>
+	
+	<select id="giftSaveUnUsedBLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT seq, brand, expiration_period, product_name, img_url FROM
 		GIFTCON
 		WHERE use_yn = 0
 		AND device_id = #{device_id}
+		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftSaveAllBLogin" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUnUsedBLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 0
+		AND device_id = #{device_id}
+		ORDER BY expiration_period ASC
+	</select>
+	
+	<select id="giftSaveUnUsedBLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 0
+		AND device_id = #{device_id}
+		ORDER BY product_name ASC
+	</select>
+	
+	<select id="giftSaveUnUsedBLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE use_yn = 0
+		AND device_id = #{device_id}
+		ORDER BY brand ASC
+	</select>
+	
+	<select id="giftSaveAllBLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT seq, brand, expiration_period, product_name, img_url FROM
 		GIFTCON
 		WHERE device_id = #{device_id}
+		ORDER BY registration_date DESC
+	</select>
+	
+	<select id="giftSaveAllBLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE device_id = #{device_id}
+		ORDER BY expiration_period ASC
+	</select>
+	
+	<select id="giftSaveAllBLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE device_id = #{device_id}
+		ORDER BY product_name ASC
+	</select>
+	
+	<select id="giftSaveAllBLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT seq, brand, expiration_period, product_name, img_url FROM
+		GIFTCON
+		WHERE device_id = #{device_id}
+		ORDER BY brand ASC
 	</select>
 	
 	<!-- Gift Detail  -->
