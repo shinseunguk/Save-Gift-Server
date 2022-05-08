@@ -128,10 +128,20 @@ public class GiftController {
 	@RequestMapping(value = "/gift/detail", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
 	public List<GiftVO> giftDetail(@RequestBody HashMap<String, Object> requestMap){
-		logger.info("requestMap... " + requestMap.toString());
+		logger.info("giftDetail requestMap... " + requestMap.toString());
 		List<GiftVO> list = giftService.giftDetail(requestMap);;
 		
 		return list;
+	}
+	
+	@RequestMapping(value = "/gift/delete", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public boolean giftDelete(@RequestBody HashMap<String, Object> requestMap){
+		boolean result = false;
+		logger.info("giftDelete requestMap... " + requestMap.toString());
+		result = giftService.giftDelete(requestMap);;
+		
+		return result;
 	}
 	
 	@RequestMapping(value = "/overlap/photo", method = RequestMethod.POST , produces = "application/json")

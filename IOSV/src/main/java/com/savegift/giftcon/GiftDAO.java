@@ -169,9 +169,22 @@ public class GiftDAO {
 		
 		list = mybatis.selectList("GiftMapper.giftDetail", requestMap);
 		
-			
-		
 		return list;
+	}
+	
+	public boolean giftDelete(HashMap<String, Object> requestMap) {
+		// 선물한 기프티콘도 삭제해야함.
+		boolean result = false;
+		logger.info("giftDetail --------> \n" + requestMap.toString());
+//		int resultNum = 1;
+		
+		int resultNum = mybatis.delete("GiftMapper.giftDelete", requestMap);
+		
+		if(resultNum == 1) {
+			result = true;
+		}
+		
+		return result;
 	}
 	
 }
