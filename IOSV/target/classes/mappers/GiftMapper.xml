@@ -209,5 +209,13 @@
 		WHERE seq = #{seq}
 	</select>
 	
+	<!-- Gift Detail  -->
+	<select id="giftDelete" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		DELETE 
+		FROM GIFTCON
+		WHERE
+		seq = #{seq} 
+	</select>
+	
 	
 </mapper>

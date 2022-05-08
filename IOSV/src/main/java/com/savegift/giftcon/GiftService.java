@@ -40,4 +40,9 @@ public class GiftService {
 	public List<GiftVO> giftDetail(HashMap<String, Object> requestMap) {
 		return giftDAO.giftDetail(requestMap);
 	}
+	
+//	//기프티콘 삭제 
+	public boolean giftDelete(HashMap<String, Object> requestMap) {
+		return giftDAO.giftDelete(requestMap);
+	}
 }
