@@ -31,6 +31,16 @@ public class GiftService {
 		return giftDAO.overlapPhoto(requestMap);
 	}
 	
+//	//기프티콘 수정
+	public int giftRevise(HashMap<String, Object> requestMap) {
+		return giftDAO.giftRevise(requestMap);
+	}
+	
+//	//기프티콘 사용여부 수정
+	public int giftUseyn(HashMap<String, Object> requestMap) {
+		return giftDAO.giftUseyn(requestMap);
+	}
+	
 //	//기프티콘 불러오기 
 	public List<GiftVO> giftSave(HashMap<String, Object> requestMap) {
 		return giftDAO.giftSave(requestMap);

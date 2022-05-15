@@ -154,6 +154,26 @@ public class GiftController {
         return result;
 	}
 	
+	@RequestMapping(value = "/gift/revise", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public int giftRevise(@RequestBody HashMap<String, Object> requestMap){
+        logger.info("/giftRevise -------> " + requestMap.toString());
+        
+        int result = giftService.giftRevise(requestMap);
+        
+        return result;
+	}
+	
+	@RequestMapping(value = "/gift/useyn", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public int giftUseyn(@RequestBody HashMap<String, Object> requestMap){
+        logger.info("/giftUseyn -------> " + requestMap.toString());
+        
+        int result = giftService.giftUseyn(requestMap);
+        
+        return result;
+	}
+	
 //	
 //	@RequestMapping(value = "/login", method = RequestMethod.POST , produces = "application/json")
 //	@ResponseBody
