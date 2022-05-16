@@ -111,6 +111,12 @@
 		AND friend = #{user_id}
 	</delete>
 	
+	<delete id="deleteFriend">
+		DELETE FROM FRIEND
+		WHERE user_id = #{friend}
+		AND friend = #{user_id}
+	</delete>
+	
 	<delete id="deleteFriendWaitMe">
 		DELETE FROM FRIEND_WAIT
 		WHERE user_id = #{user_id}

@@ -161,6 +161,37 @@ public class LoginDAO {
 		return result;
 	}	
 
+	public int deleteFriend(String user_id, String friend) {
+		int result = 0;
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("user_id", user_id);
+		map.put("friend", friend);
+		
+		FriendVO friendVO = mybatis.selectOne("LoginMapper.addFriend", map);
+		logger.info("deleteFriend friendVO " + friendVO.getFriend());
+		String deleteId = friendVO.getFriend();
+		
+		deleteId = deleteId.replace(friend, "");
+		logger.info("deleteId => "+ deleteId);
+		if(deleteId.length() != 0) {
+			if(deleteId.charAt(0) == '&') {
+				deleteId = deleteId.substring(1,deleteId.length());
+			}else if (deleteId.charAt(deleteId.length()-1) == '&') {
+				deleteId = deleteId.substring(0,deleteId.length()-1);
+			}
+			
+			map.put("friend", deleteId);
+			result = mybatis.update("LoginMapper.addFriendUpdate", map);
+		}else {
+			mybatis.delete("LoginMapper.secessionFriend", user_id);
+		}
+		
+		
+		
+		return result;
+	}	
+	
 	// 사용자가 친구추가 버튼을 눌렀을때 혹은 상태 확인값
 	public int waitFriend(String user_id, String friend, String name) {
 		int result = 0;
