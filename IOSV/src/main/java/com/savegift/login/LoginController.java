@@ -219,6 +219,25 @@ public class LoginController {
         return result;
 	}
 	
+	@RequestMapping(value = "/delete/friend", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public int deleteFriend(@RequestBody HashMap<String, Object> requestMap){
+		logger.info("/deleteFriend user_id .. "+ (String) requestMap.get("user_id"));
+		logger.info("/deleteFriend friend .. "+ (String) requestMap.get("friend"));
+		
+		
+		String user_id = (String) requestMap.get("user_id");
+		String friend = (String) requestMap.get("friend");
+		
+		logger.info("user_id ... "+ user_id);
+		logger.info("friend ... "+ friend);
+		
+		int result = loginService.deleteFriend(user_id, friend);
+		logger.info("/deleteFriend... "+ result);
+		
+		return result;
+	}
+	
 	@RequestMapping(value = "/waitFriend", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
 	public int waitFriend(@RequestBody HashMap<String, Object> requestMap){
@@ -286,8 +305,8 @@ public class LoginController {
 		list = loginService.getRequestFriend(user_id);
 		//내가 신청받은 친구
 		list2 = loginService.getRequestedFriend(user_id);
-		logger.info("list "+ list);
-		logger.info("list2 "+ list2);
+//		logger.info("list "+ list);
+//		logger.info("list2 "+ list2);
 		
 		if(list.size() == 0 && list2.size() == 0){
 			logger.info("/getRequestFriend return ---> null");
@@ -295,14 +314,11 @@ public class LoginController {
 		} else{
 			for(int i = 0 ; i < list.size() ; i++) {
 				if(i != list.size()-1) {
-					logger.info("0");
 					returnString += list.get(i).getFriend()+"&";	
 				} else{
 					if(list2.size() != 0) {
-						logger.info("1");
 						returnString += list.get(i).getFriend()+"&";
 					}else {
-						logger.info("2");
 						returnString += list.get(i).getFriend()+"#";
 					}
 				}
@@ -310,10 +326,8 @@ public class LoginController {
 			
 			for(int i = 0 ; i < list2.size() ; i++) {
 				if(i != list2.size()-1) {
-					logger.info("3");
 					returnString += list2.get(i).getUser_id()+"&";
 				} else{
-					logger.info("4");
 					returnString += list2.get(i).getUser_id()+"#";
 				}
 			}
@@ -321,14 +335,11 @@ public class LoginController {
 			
 			for(int i = 0 ; i < list.size() ; i++) {
 				if(i != list.size()-1) {
-					logger.info("5");
 					returnString += list.get(i).getStatus()+"&";	
 				} else{
 					if(list2.size() != 0) {
-						logger.info("6");
 						returnString += list.get(i).getStatus()+"&";
 					}else {
-						logger.info("7");
 						returnString += list.get(i).getStatus();
 					}
 				}

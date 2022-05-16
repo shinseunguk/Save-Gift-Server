@@ -43,6 +43,9 @@ public class LoginService {
 	public int deleteFriendWait(String user_id, String friend, String index) {
 		return loginDAO.deleteFriendWait(user_id, friend, index);
 	}
+	public int deleteFriend(String user_id, String friend) {
+		return loginDAO.deleteFriend(user_id, friend);
+	}
 	public int waitFriend(String user_id, String friend, String name) {
 		return loginDAO.waitFriend(user_id, friend, name);
 	}
