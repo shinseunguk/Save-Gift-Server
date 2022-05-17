@@ -165,15 +165,16 @@ public class LoginDAO {
 		int result = 0;
 		
 		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("user_id", user_id);
-		map.put("friend", friend);
+		map.put("user_id", user_id); // 로그인 사용자 
+		map.put("friend", friend); // 친구삭제되는 사용자
 		
+		// 로그인 사용자에서 해당 친구 삭제
 		FriendVO friendVO = mybatis.selectOne("LoginMapper.addFriend", map);
 		logger.info("deleteFriend friendVO " + friendVO.getFriend());
 		String deleteId = friendVO.getFriend();
 		
 		deleteId = deleteId.replace(friend, "");
-		logger.info("deleteId => "+ deleteId);
+		logger.info("deleteId First => "+ deleteId);
 		if(deleteId.length() != 0) {
 			if(deleteId.charAt(0) == '&') {
 				deleteId = deleteId.substring(1,deleteId.length());
@@ -184,10 +185,33 @@ public class LoginDAO {
 			map.put("friend", deleteId);
 			result = mybatis.update("LoginMapper.addFriendUpdate", map);
 		}else {
-			mybatis.delete("LoginMapper.secessionFriend", user_id);
+			mybatis.delete("LoginMapper.secessionFriend", user_id); // 친구 삭제
+			result = 1;
 		}
 		
+		map.put("user_id", friend);
+		map.put("friend", user_id); // 친구삭제되는 사용자
 		
+		List<FriendVO> list = mybatis.selectList("LoginMapper.addFriend", map);
+			for(int i = 0; i < list.size() ; i++) {
+				deleteId = list.get(i).getFriend(); // samdori96@nate.com&krdut1@gmail.com
+				
+				deleteId = deleteId.replace(user_id, "");
+				logger.info("deleteId Second => "+ deleteId);
+				if(deleteId.length() != 0) {
+					if(deleteId.charAt(0) == '&') {
+						deleteId = deleteId.substring(1,deleteId.length());
+					}else if (deleteId.charAt(deleteId.length()-1) == '&') {
+						deleteId = deleteId.substring(0,deleteId.length()-1);
+					}
+					
+					map.put("friend", deleteId);
+					result = mybatis.update("LoginMapper.addFriendUpdate", map);
+				}else {
+					mybatis.delete("LoginMapper.secessionFriend2", friend); // 친구 삭제
+					result = 1;
+				}
+			}
 		
 		return result;
 	}	
@@ -293,8 +317,38 @@ public class LoginDAO {
 		return friendVO;
 	}
 	
-	public boolean secession(String user_id) {
+	public boolean secession(String user_id) { // samdori96@nate.com
 		boolean result = true;
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		List<FriendVO> list = mybatis.selectList("LoginMapper.FriendMySelect", user_id);
+		for(int i = 0 ; i < list.size() ; i++) {
+			String user_idTemp = list.get(i).getUser_id(); // krdut1@gmail.com
+			String deleteId = list.get(i).getFriend();  // samdori96@nate.com&dhkdnxodzm@naver.com
+			
+			deleteId = deleteId.replace(user_id, "");
+			logger.info("deleteId => "+ deleteId);
+			if(deleteId.length() != 0) {
+				if(deleteId.charAt(0) == '&') {
+					deleteId = deleteId.substring(1,deleteId.length());
+				}else if (deleteId.charAt(deleteId.length()-1) == '&') {
+					deleteId = deleteId.substring(0,deleteId.length()-1);
+				}
+				
+				map.put("user_id", user_idTemp);
+				map.put("friend", deleteId);
+				if(mybatis.update("LoginMapper.addFriendUpdate", map) == 1) {
+					result = true;
+				}else {
+					result = false;
+				}
+			}else {
+				mybatis.delete("LoginMapper.secessionFriend", map); // 친구 삭제
+				result = true;
+			}
+			
+		}
 		
 		//friend
 			mybatis.delete("LoginMapper.secessionFriend", user_id);
