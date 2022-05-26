@@ -180,6 +180,8 @@ public class LoginDAO {
 				deleteId = deleteId.substring(1,deleteId.length());
 			}else if (deleteId.charAt(deleteId.length()-1) == '&') {
 				deleteId = deleteId.substring(0,deleteId.length()-1);
+			}else {
+				deleteId = deleteId.replace("&&", "&");
 			}
 			
 			map.put("friend", deleteId);
@@ -203,6 +205,8 @@ public class LoginDAO {
 						deleteId = deleteId.substring(1,deleteId.length());
 					}else if (deleteId.charAt(deleteId.length()-1) == '&') {
 						deleteId = deleteId.substring(0,deleteId.length()-1);
+					}else {
+						deleteId = deleteId.replace("&&", "&");
 					}
 					
 					map.put("friend", deleteId);
@@ -334,6 +338,8 @@ public class LoginDAO {
 					deleteId = deleteId.substring(1,deleteId.length());
 				}else if (deleteId.charAt(deleteId.length()-1) == '&') {
 					deleteId = deleteId.substring(0,deleteId.length()-1);
+				}else {
+					deleteId = deleteId.replace("&&", "&");
 				}
 				
 				map.put("user_id", user_idTemp);
