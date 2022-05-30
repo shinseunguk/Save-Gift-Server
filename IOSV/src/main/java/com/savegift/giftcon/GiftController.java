@@ -174,6 +174,20 @@ public class GiftController {
         return result;
 	}
 	
+	@RequestMapping(value = "/gift/present", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public boolean giftPresent(@RequestBody HashMap<String, Object> requestMap){
+		logger.info("/giftPresent -------> " + requestMap.toString());
+		
+		int result = giftService.giftPresent(requestMap);
+		
+		if(result == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 //	
 //	@RequestMapping(value = "/login", method = RequestMethod.POST , produces = "application/json")
 //	@ResponseBody

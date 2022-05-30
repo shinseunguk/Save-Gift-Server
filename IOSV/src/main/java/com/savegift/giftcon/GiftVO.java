@@ -15,6 +15,10 @@ public class GiftVO {
 	private String registrant;
 	private String product_name;
 	private String img_local_url;
+	private String present_id;
+	private String present_message;
+	private int present_check;
+	
 	public int getSeq() {
 		return seq;
 	}
@@ -87,6 +91,23 @@ public class GiftVO {
 	public void setImg_local_url(String img_local_url) {
 		this.img_local_url = img_local_url;
 	}
-	
+	public String getPresent_id() {
+		return present_id;
+	}
+	public void setPresent_id(String present_id) {
+		this.present_id = present_id;
+	}
+	public String getPresent_message() {
+		return present_message;
+	}
+	public void setPresent_message(String present_message) {
+		this.present_message = present_message;
+	}
+	public int getPresent_check() {
+		return present_check;
+	}
+	public void setPresent_check(int present_check) {
+		this.present_check = present_check;
+	}
 	
 }

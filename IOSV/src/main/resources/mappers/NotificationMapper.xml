@@ -3,7 +3,7 @@
 <mapper namespace="NotificationMapper">
 
 	<select id="status" resultType="com.savegift.login.LoginVO">
-		SELECT name ,push_yn, email_yn, sms_yn  
+		SELECT name, email_yn, sms_yn  
 		FROM USER
 		WHERE user_id = #{user_id}
 	</select>
