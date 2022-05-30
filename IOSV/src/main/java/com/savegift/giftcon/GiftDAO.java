@@ -61,6 +61,13 @@ public class GiftDAO {
 		return result;
 	}
 	
+	public int giftPresent(HashMap<String, Object> requestMap) {
+		int result = 0;
+		result = mybatis.update("GiftMapper.giftPresent", requestMap);
+		
+		return result;
+	}
+	
 	public List<GiftVO> giftSave(HashMap<String, Object> requestMap) {
 		List<GiftVO> list = null;
 		logger.info("giftSave --------> \n" + requestMap.toString());

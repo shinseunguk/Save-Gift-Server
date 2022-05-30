@@ -9,7 +9,7 @@
 	<!-- 회원가입mapper -->
 	<insert id="register" parameterType="hashMap">
 		INSERT INTO USER 
-		VALUES(#{user_id},#{user_password},#{name},#{phone_number},0,#{push_yn},#{email_yn},#{sms_yn}, NOW())
+		VALUES(#{user_id},#{user_password},#{name},#{phone_number},0,#{email_yn},#{sms_yn}, NOW())
 	</insert>
 	
 	<select id="duplicationid" resultType="com.savegift.login.LoginVO">
