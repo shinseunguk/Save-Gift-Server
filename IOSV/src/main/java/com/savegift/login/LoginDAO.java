@@ -368,5 +368,35 @@ public class LoginDAO {
 			mybatis.delete("LoginMapper.secessionUserDevice", user_id);
 		
 		return result;
+	}
+	
+	public LoginVO userInfo(String user_id) {
+		LoginVO loginVO = mybatis.selectOne("LoginMapper.userInfo", user_id);
+		return loginVO;
+	}
+	
+	public boolean userinfoName(HashMap<String, Object> requestMap) {
+		int resultInt = mybatis.update("LoginMapper.userinfoName", requestMap);
+		String registrant = requestMap.get("user_id")+"("+requestMap.get("name")+")";
+		requestMap.put("registrant", registrant);
+		logger.info("변경될 등록아이디 ==> " + registrant);
+		mybatis.update("GiftMapper.updateGiftcontRegistrant", requestMap);
+		
+		
+		if(resultInt == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean userinfoPassword(HashMap<String, Object> requestMap) {
+		int resultInt = mybatis.update("LoginMapper.userinfoPassword", requestMap);
+		
+		if(resultInt == 1) {
+			return true;
+		}else {
+			return false;
+		}
 	}	
 }
