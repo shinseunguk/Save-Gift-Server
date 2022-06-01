@@ -69,6 +69,7 @@ public class GiftDAO {
 	}
 	
 	public List<GiftVO> giftSave(HashMap<String, Object> requestMap) {
+		int present = 0;
 		List<GiftVO> list = null;
 		logger.info("giftSave --------> \n" + requestMap.toString());
 //		mybatis.selectList("GiftMapper.overlapPhoto", requestMap);
@@ -80,54 +81,96 @@ public class GiftDAO {
         logger.info("index -------> "+ index);
         logger.info("use_yn -------> "+ use_yn);
         logger.info("category -------> "+ category);
+        
+        
+        if(requestMap.get("present") != null) {
+        	present = (Integer) requestMap.get("present");	
+        }
+        logger.info("present ===> " + present);
+        
 		
 		if(!index.contains("blogin")) { // 로그인
 			String user_id = (String) requestMap.get("user_id");
 			logger.info("해당 아이디로 select -----> " + user_id);
         	
-        	if(use_yn.equals("All")){
-        		if(category.equals("registrationDate")) {
-        			logger.info("로그인 All 최근 등록순");
-        			list = mybatis.selectList("GiftMapper.giftSaveAllLogin1", requestMap);
-        		}else if(category.equals("expirationDate")) {
-        			logger.info("로그인 All 유효기간 임박순");
-        			list = mybatis.selectList("GiftMapper.giftSaveAllLogin2", requestMap);
-        		}else if(category.equals("productName")) {
-        			logger.info("로그인 All 상품명순");
-        			list = mybatis.selectList("GiftMapper.giftSaveAllLogin3", requestMap);
-        		}else if(category.equals("brandName")) {
-        			logger.info("로그인 All 교환처 이름순");
-        			list = mybatis.selectList("GiftMapper.giftSaveAllLogin4", requestMap);
-        		}
-        	}else if(use_yn.equals("Unused")) {
-        		if(category.equals("registrationDate")) {
-        			logger.info("로그인 Unused 최근 등록순");
-        			list = mybatis.selectList("GiftMapper.giftSaveUnUsedLogin1", requestMap);
-        		}else if(category.equals("expirationDate")) {
-        			logger.info("로그인 Unused 유효기간 임박순");
-        			list = mybatis.selectList("GiftMapper.giftSaveUnUsedLogin2", requestMap);
-        		}else if(category.equals("productName")) {
-        			logger.info("로그인 Unused 상품명순");
-        			list = mybatis.selectList("GiftMapper.giftSaveUnUsedLogin3", requestMap);
-        		}else if(category.equals("brandName")) {
-        			logger.info("로그인 Unused 교환처 이름순");
-        			list = mybatis.selectList("GiftMapper.giftSaveUnUsedLogin4", requestMap);
-        		}
-        	}else if(use_yn.equals("Used")) {
-        		if(category.equals("registrationDate")) {
-        			logger.info("로그인 Used 최근 등록순");
-        			list = mybatis.selectList("GiftMapper.giftSaveUsedLogin1", requestMap);
-        		}else if(category.equals("expirationDate")) {
-        			logger.info("로그인 Used 유효기간 임박순");
-        			list = mybatis.selectList("GiftMapper.giftSaveUsedLogin2", requestMap);
-        		}else if(category.equals("productName")) {
-        			logger.info("로그인 Used 상품명순");
-        			list = mybatis.selectList("GiftMapper.giftSaveUsedLogin3", requestMap);
-        		}else if(category.equals("brandName")) {
-        			logger.info("로그인 Used 교환처 이름순");
-        			list = mybatis.selectList("GiftMapper.giftSaveUsedLogin4", requestMap);
-        		}
-        	}
+			if(present == 0) { // 저장소
+				
+				if(use_yn.equals("All")){
+					if(category.equals("registrationDate")) {
+						logger.info("로그인 All 최근 등록순");
+						list = mybatis.selectList("GiftMapper.giftSaveAllLogin1", requestMap);
+					}else if(category.equals("expirationDate")) {
+						logger.info("로그인 All 유효기간 임박순");
+						list = mybatis.selectList("GiftMapper.giftSaveAllLogin2", requestMap);
+					}else if(category.equals("productName")) {
+						logger.info("로그인 All 상품명순");
+						list = mybatis.selectList("GiftMapper.giftSaveAllLogin3", requestMap);
+					}else if(category.equals("brandName")) {
+						logger.info("로그인 All 교환처 이름순");
+						list = mybatis.selectList("GiftMapper.giftSaveAllLogin4", requestMap);
+					}
+				}else if(use_yn.equals("Unused")) {
+					if(category.equals("registrationDate")) {
+						logger.info("로그인 Unused 최근 등록순");
+						list = mybatis.selectList("GiftMapper.giftSaveUnUsedLogin1", requestMap);
+					}else if(category.equals("expirationDate")) {
+						logger.info("로그인 Unused 유효기간 임박순");
+						list = mybatis.selectList("GiftMapper.giftSaveUnUsedLogin2", requestMap);
+					}else if(category.equals("productName")) {
+						logger.info("로그인 Unused 상품명순");
+						list = mybatis.selectList("GiftMapper.giftSaveUnUsedLogin3", requestMap);
+					}else if(category.equals("brandName")) {
+						logger.info("로그인 Unused 교환처 이름순");
+						list = mybatis.selectList("GiftMapper.giftSaveUnUsedLogin4", requestMap);
+					}
+				}else if(use_yn.equals("Used")) {
+					if(category.equals("registrationDate")) {
+						logger.info("로그인 Used 최근 등록순");
+						list = mybatis.selectList("GiftMapper.giftSaveUsedLogin1", requestMap);
+					}else if(category.equals("expirationDate")) {
+						logger.info("로그인 Used 유효기간 임박순");
+						list = mybatis.selectList("GiftMapper.giftSaveUsedLogin2", requestMap);
+					}else if(category.equals("productName")) {
+						logger.info("로그인 Used 상품명순");
+						list = mybatis.selectList("GiftMapper.giftSaveUsedLogin3", requestMap);
+					}else if(category.equals("brandName")) {
+						logger.info("로그인 Used 교환처 이름순");
+						list = mybatis.selectList("GiftMapper.giftSaveUsedLogin4", requestMap);
+					}
+				}
+			}else { //선물함
+				if(present == 1) {
+					if(category.equals("registrationDate")) {
+						logger.info("선물함 최근 등록순");
+						list = mybatis.selectList("GiftMapper.myPresent1", requestMap);
+					}else if(category.equals("expirationDate")) {
+						logger.info("선물함 유효기간 임박순");
+						list = mybatis.selectList("GiftMapper.myPresent2", requestMap);
+					}else if(category.equals("productName")) {
+						logger.info("선물함 상품명순");
+						list = mybatis.selectList("GiftMapper.myPresent3", requestMap);
+					}else if(category.equals("brandName")) {
+						logger.info("선물함 교환처 이름순");
+						list = mybatis.selectList("GiftMapper.myPresent4", requestMap);
+					}
+				}else if(present == 2) {
+					
+				}else if(present == 3) {
+					if(category.equals("registrationDate")) {
+						logger.info("내가준 선물 최근 등록순");
+						list = mybatis.selectList("GiftMapper.giftPresent1", requestMap);
+					}else if(category.equals("expirationDate")) {
+						logger.info("내가준 선물 유효기간 임박순");
+						list = mybatis.selectList("GiftMapper.giftPresent2", requestMap);
+					}else if(category.equals("productName")) {
+						logger.info("내가준 선물 상품명순");
+						list = mybatis.selectList("GiftMapper.giftPresent3", requestMap);
+					}else if(category.equals("brandName")) {
+						logger.info("내가준 선물 교환처 이름순");
+						list = mybatis.selectList("GiftMapper.giftPresent4", requestMap);
+					}
+				}
+			}
         	
         }else { // 비로그인
         	String device_id = (String) requestMap.get("device_id");

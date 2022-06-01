@@ -227,6 +227,70 @@
 		ORDER BY brand ASC
 	</select>
 	
+	<!-- 선물함 -->
+	<select id="myPresent1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE present_id = #{user_id}
+		ORDER BY registration_date DESC
+	</select>
+	
+	<select id="myPresent2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE present_id = #{user_id}
+		ORDER BY expiration_period ASC
+	</select>
+	
+	<select id="myPresent3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE present_id = #{user_id}
+		ORDER BY product_name ASC
+	</select>
+	
+	<select id="myPresent4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE present_id = #{user_id}
+		ORDER BY brand ASC
+	</select>
+	<!-- 선물함 -->
+	
+	<!-- 내가 준 선물 -->
+	<select id="giftPresent1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE user_id = #{user_id}
+		AND present_id is not null
+		ORDER BY registration_date DESC
+	</select>
+	
+	<select id="giftPresent2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE user_id = #{user_id}
+		AND present_id is not null
+		ORDER BY expiration_period ASC
+	</select>
+	
+	<select id="giftPresent3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE user_id = #{user_id}
+		AND present_id is not null
+		ORDER BY product_name ASC
+	</select>
+	
+	<select id="giftPresent4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE user_id = #{user_id}
+		AND present_id is not null
+		ORDER BY brand ASC
+	</select>
+	<!-- 내가 준 선물 -->
+	
 	<!-- Gift Detail  -->
 	<select id="giftDetail" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT * FROM

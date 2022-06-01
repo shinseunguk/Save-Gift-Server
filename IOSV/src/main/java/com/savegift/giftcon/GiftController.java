@@ -118,9 +118,12 @@ public class GiftController {
 		List<GiftVO> list = null;
 		list = giftService.giftSave(requestMap);
 		
-		for(int i = 0; i < list.size() ; i++) {
-			logger.info("list"+ i +"--> " + list.get(i).toString());
+		if(list != null) {
+			for(int i = 0; i < list.size() ; i++) {
+				logger.info("list"+ i +"--> " + list.get(i).toString());
+			}	
 		}
+		
         
         return list;
 	}
