@@ -163,4 +163,22 @@
 		WHERE user_id = #{user_id}
 	</delete>
 	
+	<select id="userInfo" resultType="com.savegift.login.LoginVO">
+		SELECT name, create_date FROM USER
+		WHERE 
+		user_id = #{user_id}
+	</select>
+	
+	<update id="userinfoName" parameterType="HashMap">
+		UPDATE USER
+	 	SET name = #{name}
+	 	WHERE user_id = #{user_id} 
+	</update>
+	
+	<update id="userinfoPassword" parameterType="HashMap">
+		UPDATE USER
+	 	SET user_password = #{user_password}
+	 	WHERE user_id = #{user_id} 
+	</update>
+	
 </mapper>

@@ -64,4 +64,13 @@ public class LoginService {
 	public boolean secession(String user_id) {
 		return loginDAO.secession(user_id);
 	}
+	public LoginVO userInfo(String user_id) {
+		return loginDAO.userInfo(user_id);
+	}
+	public boolean userinfoName(HashMap<String, Object> requestMap) {
+		return loginDAO.userinfoName(requestMap);
+	}
+	public boolean userinfoPassword(HashMap<String, Object> requestMap) {
+		return loginDAO.userinfoPassword(requestMap);
+	}
 }

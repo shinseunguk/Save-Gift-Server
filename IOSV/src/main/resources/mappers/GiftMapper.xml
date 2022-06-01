@@ -267,5 +267,11 @@
 		WHERE seq = #{seq}
 	</update>
 	
+	<update id="updateGiftcontRegistrant" parameterType="hashMap">
+		UPDATE GIFTCON SET
+		registrant = #{registrant}
+		WHERE user_id = #{user_id} 
+	</update>
+	
 	
 </mapper>

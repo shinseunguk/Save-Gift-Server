@@ -81,14 +81,14 @@ public class LoginController {
         //SHA256으로 암호화된 비밀번호
 		try {
 			String cryptogram = sha256.encrypt((String) requestMap.get("user_password"));
-			requestMap.put("user_password", cryptogram);
+			requestMap.put("user_password", "fewnlwll3k2lnkqq"+cryptogram+"mmlwen5i4v3bbdui2");
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			logger.info("error ", e);
 			e.printStackTrace();
 		}
-        
-        logger.info("userInfo2 ####" + requestMap.toString());
+//		fewnlwll3k2lnkqq85ba64cb70cf7296c14420d58259b038840d7ebcc54937867a4345112779ab83mmlwen5i4v3bbdui2
+//        logger.info("userInfo2 ####" + requestMap.toString());
         int result = loginService.register(requestMap);
         
         if (result == 1){ //insert 성공(회원가입 성공)
@@ -118,7 +118,7 @@ public class LoginController {
         //SHA256으로 암호화된 비밀번호
 		try {
 			String cryptogram = sha256.encrypt((String) requestMap.get("user_password"));
-			requestMap.put("user_password", cryptogram);
+			requestMap.put("user_password", "fewnlwll3k2lnkqq"+cryptogram+"mmlwen5i4v3bbdui2");
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			logger.info("error ", e);
@@ -386,5 +386,56 @@ public class LoginController {
 		result = loginService.secession(user_id);
 		
 		return true;
+	}
+	
+	@RequestMapping(value = "/userinfo", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public LoginVO userInfo(@RequestBody HashMap<String, Object> requestMap){
+		String user_id = (String) requestMap.get("user_id");
+		LoginVO	loginVO = loginService.userInfo(user_id);
+		
+		return loginVO;
+	}
+	
+	@RequestMapping(value = "/userinfo/name", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public boolean userinfoName(@RequestBody HashMap<String, Object> requestMap){
+		boolean result = false;
+		String user_id = (String) requestMap.get("user_id");
+		String name = (String) requestMap.get("name");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("user_id", user_id);
+		map.put("name", name);
+		
+		result = loginService.userinfoName(map);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/useinfo/password", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public boolean userinfoPassword(@RequestBody HashMap<String, Object> requestMap){
+		boolean result = false;
+		String user_id = (String) requestMap.get("user_id");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("user_id", user_id);
+		
+		//SHA256으로 암호화된 비밀번호
+		try {
+			String cryptogram = sha256.encrypt((String) requestMap.get("user_password"));
+			map.put("user_password", "fewnlwll3k2lnkqq"+cryptogram+"mmlwen5i4v3bbdui2");
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			logger.info("error ", e);
+			e.printStackTrace();
+		}
+		
+		result = loginService.userinfoPassword(map);
+		
+		return result;
 	}
 }
