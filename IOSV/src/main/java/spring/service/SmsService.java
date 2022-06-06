@@ -33,4 +33,8 @@ public class SmsService {
         return loginDAO.sendSMS(phoneNumber, cerNum, device_id, params);
     }
 	
+	public boolean smsCheck(HashMap<String,Object> requestMap) {
+        return loginDAO.smsCheck(requestMap);
+    }
+	
 }

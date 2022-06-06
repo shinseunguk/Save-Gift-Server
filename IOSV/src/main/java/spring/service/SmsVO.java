@@ -8,6 +8,7 @@ public class SmsVO {
 	private String cert_number;
 	private int count;
 	private Date cert_date;
+	private String device_id;
 	
 	public String getPhone_number() {
 		return phone_number;
@@ -33,6 +34,11 @@ public class SmsVO {
 	public void setCert_date(Date cert_date) {
 		this.cert_date = cert_date;
 	}
-	
+	public String getDevice_id() {
+		return device_id;
+	}
+	public void setDevice_id(String device_id) {
+		this.device_id = device_id;
+	}
 	
 }

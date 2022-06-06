@@ -40,4 +40,14 @@ public class SmsController {
 		result = smsService.certifiedPhoneNumber(phone_number, numStr, device_id);
 		return result;
 	}
+	
+
+	@RequestMapping(value = "/sms/check", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public boolean smsCheck(@RequestBody HashMap<String, Object> requestMap) {
+		boolean result = false;
+
+		result = smsService.smsCheck(requestMap);
+		return result;
+	}
 }
