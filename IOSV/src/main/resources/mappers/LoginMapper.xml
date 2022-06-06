@@ -183,7 +183,7 @@
 	
 	<select id="smsSelect" parameterType="hashMap" resultType="spring.service.SmsVO">
 		SELECT * FROM AUTH_SMS
-		WHERE device_id = #{device_id}
+		WHERE phone_number = #{phone_number}
 		AND cert_date = DATE_FORMAT(now(), '%Y-%m-%d') 
 	</select>
 	
@@ -194,8 +194,16 @@
 	
 	<update id="smsUpdate" parameterType="HashMap">
 		UPDATE AUTH_SMS
-	 	SET count = #{count}
+	 	SET count = #{count},
+	 	cert_number = #{cert_number}
 	 	WHERE cert_date = DATE_FORMAT(now(), '%Y-%m-%d')
-	 	AND device_id = #{device_id}
+	 	AND phone_number = #{phone_number}
 	</update>
+	
+	<select id="smsCheck" parameterType="HashMap" resultType="spring.service.SmsVO">
+		SELECT * FROM AUTH_SMS
+		WHERE phone_number = #{phone_number} 
+		AND cert_date = DATE_FORMAT(now(), '%Y-%m-%d')
+		AND cert_number = #{cert_number}
+	</select>
 </mapper>

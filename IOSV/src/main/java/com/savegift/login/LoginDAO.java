@@ -452,4 +452,14 @@ public class LoginDAO {
 		}
 		return "";
 	}
+	
+	public boolean smsCheck(HashMap<String, Object> requestMap) {
+		SmsVO smsVO = mybatis.selectOne("LoginMapper.smsCheck", requestMap);
+		
+		if(smsVO != null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }
