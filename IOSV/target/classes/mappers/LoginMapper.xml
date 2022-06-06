@@ -9,7 +9,7 @@
 	<!-- 회원가입mapper -->
 	<insert id="register" parameterType="hashMap">
 		INSERT INTO USER 
-		VALUES(#{user_id},#{user_password},#{name},#{phone_number},0,#{push_yn},#{email_yn},#{sms_yn}, NOW())
+		VALUES(#{user_id},#{user_password},#{name},#{phone_number},0,#{email_yn},#{sms_yn}, NOW())
 	</insert>
 	
 	<select id="duplicationid" resultType="com.savegift.login.LoginVO">
@@ -47,6 +47,16 @@
 		SELECT * FROM
 		FRIEND
 		WHERE user_id = #{user_id}
+	</select>
+	
+	<select id="FriendMySelect" resultType="com.savegift.login.FriendVO" parameterType="String">
+		SELECT * FROM
+		FRIEND
+		WHERE (
+		friend LIKE CONCAT('%',#{user_id},'%')
+		or friend LIKE CONCAT(#{user_id},'%')
+		or friend LIKE CONCAT('%',#{user_id})
+		)
 	</select>
 	
 	<select id="addFriendOpponent" resultType="com.savegift.login.FriendVO" parameterType="String">
@@ -111,6 +121,12 @@
 		AND friend = #{user_id}
 	</delete>
 	
+	<delete id="deleteFriend">
+		DELETE FROM FRIEND
+		WHERE user_id = #{friend}
+		AND friend = #{user_id}
+	</delete>
+	
 	<delete id="deleteFriendWaitMe">
 		DELETE FROM FRIEND_WAIT
 		WHERE user_id = #{user_id}
@@ -120,6 +136,11 @@
 	<delete id="secessionFriend">
 		DELETE FROM FRIEND
 		WHERE user_id = #{user_id}
+	</delete>
+	
+	<delete id="secessionFriend2">
+		DELETE FROM FRIEND
+		WHERE user_id = #{friend}
 	</delete>
 	
 	<delete id="secessionFriendWait">
@@ -142,4 +163,39 @@
 		WHERE user_id = #{user_id}
 	</delete>
 	
+	<select id="userInfo" resultType="com.savegift.login.LoginVO">
+		SELECT name, create_date FROM USER
+		WHERE 
+		user_id = #{user_id}
+	</select>
+	
+	<update id="userinfoName" parameterType="HashMap">
+		UPDATE USER
+	 	SET name = #{name}
+	 	WHERE user_id = #{user_id} 
+	</update>
+	
+	<update id="userinfoPassword" parameterType="HashMap">
+		UPDATE USER
+	 	SET user_password = #{user_password}
+	 	WHERE user_id = #{user_id} 
+	</update>
+	
+	<select id="smsSelect" parameterType="hashMap" resultType="spring.service.SmsVO">
+		SELECT * FROM AUTH_SMS
+		WHERE device_id = #{device_id}
+		AND cert_date = DATE_FORMAT(now(), '%Y-%m-%d') 
+	</select>
+	
+	<insert id="smsInsert" parameterType="hashMap">
+		INSERT INTO AUTH_SMS 
+		VALUES(#{phone_number}, #{cert_number}, 1, DATE_FORMAT(now(), '%Y-%m-%d'), #{device_id})
+	</insert>
+	
+	<update id="smsUpdate" parameterType="HashMap">
+		UPDATE AUTH_SMS
+	 	SET count = #{count}
+	 	WHERE cert_date = DATE_FORMAT(now(), '%Y-%m-%d')
+	 	AND device_id = #{device_id}
+	</update>
 </mapper>

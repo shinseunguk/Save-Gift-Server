@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,10 @@ import org.springframework.stereotype.Repository;
 import com.savegift.giftcon.GiftVO;
 import com.savegift.notification.NotificationVO;
 
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import spring.service.SmsVO;
+
 @Repository
 public class LoginDAO {
 	
@@ -20,7 +25,6 @@ public class LoginDAO {
 	
 	@Autowired
     SqlSession mybatis;
-	
 	
 	public int register(HashMap<String, Object> requestMap) {
 		int result = mybatis.insert("LoginMapper.register", requestMap);
@@ -398,5 +402,54 @@ public class LoginDAO {
 		}else {
 			return false;
 		}
-	}	
+	}
+	
+	public String sendSMS(String phone_number, String certNum, String device_id, HashMap<String, String> params) {
+		String api_key = "NCSDSJDNIALLOOF0";
+        String api_secret = "2TOIAXY6SXFHDHF5637A4OCBZAJXNIPQ";
+        Message coolsms = new Message(api_key, api_secret);
+        
+		int result = 0;
+		int count;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("phone_number", phone_number);
+		map.put("cert_number", certNum);
+		map.put("device_id", device_id);
+		
+		SmsVO smsVO = mybatis.selectOne("LoginMapper.smsSelect", map);
+		
+		if(smsVO != null) { // 당일에 2번 이상 시도
+			count = smsVO.getCount();
+			if(count == 3) { // 3번째 시도
+				logger.info(count+"번째 시도");
+				return "false";
+			}else {
+		        try {
+		        	JSONObject obj = (JSONObject) coolsms.send(params);
+		        	logger.info(obj.toString());
+		        	
+					map.put("count", count + 1);
+					result = mybatis.update("LoginMapper.smsUpdate", map);
+					logger.info(count+"번째 시도 Update");
+		        } catch (CoolsmsException e) {
+		        	logger.error(e.getMessage());
+		        	logger.error("오류코드 : "+e.getCode());
+		            return e.getMessage();
+		        }
+			}
+		}else { // 당일에 첫 시도
+	        try {
+	        	JSONObject obj = (JSONObject) coolsms.send(params);
+	        	logger.info(obj.toString());
+	        	
+				mybatis.insert("LoginMapper.smsInsert", map);
+				logger.info("당일 첫 시도");
+	        } catch (CoolsmsException e) {
+	        	logger.error(e.getMessage());
+	        	logger.error("오류코드 : "+e.getCode());
+	            return e.getMessage();
+	        }
+		}
+		return "";
+	}
 }
