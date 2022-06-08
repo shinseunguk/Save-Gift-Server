@@ -32,6 +32,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 /**
  * Handles requests for the application home page.
  */
+
+// 스케줄러
+// https://blog.naver.com/deeperain/221609802306
 @Controller
 public class GiftController {
 	

@@ -73,4 +73,13 @@ public class LoginService {
 	public boolean userinfoPassword(HashMap<String, Object> requestMap) {
 		return loginDAO.userinfoPassword(requestMap);
 	}
+	public boolean checkEmailInfo(HashMap<String, Object> requestMap) {
+		return loginDAO.checkEmailInfo(requestMap);
+	}
+	public boolean checkEmail(HashMap<String, Object> requestMap) {
+		return loginDAO.checkEmail(requestMap);
+	}
+	public boolean certNumberDB(String user_id, String cert_number) {
+		return loginDAO.certNumberDB(user_id, cert_number);
+	}
 }
