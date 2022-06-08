@@ -16,6 +16,7 @@ import com.savegift.notification.NotificationVO;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import spring.service.EmailVO;
 import spring.service.SmsVO;
 
 @Repository
@@ -400,6 +401,42 @@ public class LoginDAO {
 		if(resultInt == 1) {
 			return true;
 		}else {
+			return false;
+		}
+	}
+	
+	public boolean checkEmailInfo(HashMap<String, Object> requestMap) {
+		LoginVO loginVO = mybatis.selectOne("LoginMapper.checkEmailInfo", requestMap);
+		
+		if(loginVO != null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean checkEmail(HashMap<String, Object> requestMap) {
+		EmailVO emailVO = mybatis.selectOne("LoginMapper.checkEmail", requestMap);
+		
+		if(emailVO != null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	
+	public boolean certNumberDB(String user_id, String cert_number) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("user_id", user_id);
+		map.put("cert_number", cert_number);
+		EmailVO emailVO = mybatis.selectOne("LoginMapper.emailCheckSelect", map);
+		
+		if(emailVO != null) {
+			mybatis.update("LoginMapper.emailCheckUpdate", map);
+			return true;
+		}else {
+			mybatis.insert("LoginMapper.emailCheckInsert", map);
 			return false;
 		}
 	}
