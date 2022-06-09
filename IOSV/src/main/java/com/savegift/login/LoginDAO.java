@@ -425,6 +425,16 @@ public class LoginDAO {
 		}
 	}
 	
+	public boolean checkNamePhone(HashMap<String, Object> requestMap) {
+		List<LoginVO> list = mybatis.selectList("LoginMapper.checkNamePhone", requestMap);
+		
+		if(list.size() != 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	
 	public boolean certNumberDB(String user_id, String cert_number) {
 		HashMap<String, String> map = new HashMap<String, String>();

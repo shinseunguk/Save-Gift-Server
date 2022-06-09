@@ -66,12 +66,8 @@ public class LoginController {
 	public boolean register(@RequestBody HashMap<String, Object> requestMap){
 		boolean resultBool = false;
 		
-		logger.info("/post....");
-		
 		String userInfo = requestMap.toString();
 		
-//		개발완료후 로그 지울것
-		logger.info("userInfo >>>>" + userInfo);
 		
 		String user_id = (String) requestMap.get("user_id"); // 아이디   
         String password = (String) requestMap.get("user_password"); // 패스워드
@@ -435,6 +431,15 @@ public class LoginController {
 		}
 		
 		result = loginService.userinfoPassword(map);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/check/namephone", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public boolean checkNamePhone(@RequestBody HashMap<String, Object> requestMap){
+		boolean result = false;
+		result = loginService.checkNamePhone(requestMap);
 		
 		return result;
 	}
