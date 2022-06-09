@@ -337,5 +337,11 @@
 		WHERE user_id = #{user_id} 
 	</update>
 	
+	<update id="autoUseYnUpdate">
+		UPDATE GIFTCON SET
+		use_yn = 1
+		WHERE use_yn = 0
+		AND expiration_period &lt; CURDATE() 
+	</update>
 	
 </mapper>

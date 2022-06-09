@@ -251,4 +251,13 @@ public class GiftDAO {
 		return result;
 	}
 	
+	public boolean autoUseYnUpdate() {
+		int result = mybatis.update("GiftMapper.autoUseYnUpdate");
+		if (result == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 }

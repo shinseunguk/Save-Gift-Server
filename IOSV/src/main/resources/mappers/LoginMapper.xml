@@ -234,4 +234,10 @@
 		WHERE user_id = #{user_id}
 		AND cert_number = #{cert_number}
 	</select>
+	
+	<select id="checkNamePhone" parameterType="HashMap" resultType="spring.service.EmailVO">
+		SELECT * FROM USER
+		WHERE name = #{name}
+		AND phone_number = #{phone_number}
+	</select>
 </mapper>
