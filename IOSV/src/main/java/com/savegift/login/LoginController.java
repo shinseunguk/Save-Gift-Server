@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
- * Handles requests for the application home page. git test 
+ * Handles requests for the application home page. git test gt
  */
 @Controller
 public class LoginController {
@@ -440,6 +440,15 @@ public class LoginController {
 	public boolean checkNamePhone(@RequestBody HashMap<String, Object> requestMap){
 		boolean result = false;
 		result = loginService.checkNamePhone(requestMap);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/find/id", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public String findId(@RequestBody HashMap<String, Object> requestMap){
+		String result = "";
+		result = loginService.findId(requestMap);
 		
 		return result;
 	}
