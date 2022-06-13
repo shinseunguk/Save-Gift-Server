@@ -183,19 +183,61 @@
 	
 	<select id="smsSelect" parameterType="hashMap" resultType="spring.service.SmsVO">
 		SELECT * FROM AUTH_SMS
-		WHERE device_id = #{device_id}
+		WHERE phone_number = #{phone_number}
 		AND cert_date = DATE_FORMAT(now(), '%Y-%m-%d') 
 	</select>
 	
 	<insert id="smsInsert" parameterType="hashMap">
-		INSERT INTO AUTH_SMS 
+		INSERT INTO AUTH_SMS
 		VALUES(#{phone_number}, #{cert_number}, 1, DATE_FORMAT(now(), '%Y-%m-%d'), #{device_id})
 	</insert>
 	
 	<update id="smsUpdate" parameterType="HashMap">
 		UPDATE AUTH_SMS
-	 	SET count = #{count}
+	 	SET count = #{count},
+	 	cert_number = #{cert_number}
 	 	WHERE cert_date = DATE_FORMAT(now(), '%Y-%m-%d')
-	 	AND device_id = #{device_id}
+	 	AND phone_number = #{phone_number}
 	</update>
+	
+	<select id="smsCheck" parameterType="HashMap" resultType="spring.service.SmsVO">
+		SELECT * FROM AUTH_SMS
+		WHERE phone_number = #{phone_number} 
+		AND cert_date = DATE_FORMAT(now(), '%Y-%m-%d')
+		AND cert_number = #{cert_number}
+	</select>
+	
+	<select id="checkEmailInfo" parameterType="HashMap" resultType="com.savegift.login.LoginVO">
+		SELECT * FROM USER
+		WHERE name = #{name}
+		AND user_id = #{user_id}
+	</select>
+	
+	<select id="emailCheckSelect" parameterType="HashMap" resultType="spring.service.EmailVO">
+		SELECT * FROM AUTH_EMAIL
+		WHERE user_id = #{user_id}
+	</select>
+	
+	<update id="emailCheckUpdate" parameterType="HashMap">
+		UPDATE AUTH_EMAIL
+		SET cert_number = #{cert_number}
+		WHERE user_id = #{user_id}
+	</update>
+	
+	<insert id="emailCheckInsert" parameterType="HashMap">
+		INSERT INTO AUTH_EMAIL
+		VALUES (#{user_id}, #{cert_number})
+	</insert>
+	
+	<select id="checkEmail" parameterType="HashMap" resultType="spring.service.EmailVO">
+		SELECT * FROM AUTH_EMAIL
+		WHERE user_id = #{user_id}
+		AND cert_number = #{cert_number}
+	</select>
+	
+	<select id="checkNamePhone" parameterType="HashMap" resultType="com.savegift.login.LoginVO">
+		SELECT * FROM USER
+		WHERE name = #{name}
+		AND phone_number = #{phone_number}
+	</select>
 </mapper>

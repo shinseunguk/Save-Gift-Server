@@ -235,7 +235,7 @@
 		AND cert_number = #{cert_number}
 	</select>
 	
-	<select id="checkNamePhone" parameterType="HashMap" resultType="spring.service.EmailVO">
+	<select id="checkNamePhone" parameterType="HashMap" resultType="com.savegift.login.LoginVO">
 		SELECT * FROM USER
 		WHERE name = #{name}
 		AND phone_number = #{phone_number}

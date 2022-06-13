@@ -142,19 +142,31 @@ public class GiftDAO {
 				if(present == 1) {
 					if(category.equals("registrationDate")) {
 						logger.info("선물함 최근 등록순");
-						list = mybatis.selectList("GiftMapper.myPresent1", requestMap);
+						list = mybatis.selectList("GiftMapper.myPresent1NotUse", requestMap);
 					}else if(category.equals("expirationDate")) {
 						logger.info("선물함 유효기간 임박순");
-						list = mybatis.selectList("GiftMapper.myPresent2", requestMap);
+						list = mybatis.selectList("GiftMapper.myPresent2NotUse", requestMap);
 					}else if(category.equals("productName")) {
 						logger.info("선물함 상품명순");
-						list = mybatis.selectList("GiftMapper.myPresent3", requestMap);
+						list = mybatis.selectList("GiftMapper.myPresent3NotUse", requestMap);
 					}else if(category.equals("brandName")) {
 						logger.info("선물함 교환처 이름순");
-						list = mybatis.selectList("GiftMapper.myPresent4", requestMap);
+						list = mybatis.selectList("GiftMapper.myPresent4NotUse", requestMap);
 					}
 				}else if(present == 2) {
-					
+					if(category.equals("registrationDate")) {
+						logger.info("선물함 사용 최근 등록순");
+						list = mybatis.selectList("GiftMapper.myPresent1Use", requestMap);
+					}else if(category.equals("expirationDate")) {
+						logger.info("선물함 사용 유효기간 임박순");
+						list = mybatis.selectList("GiftMapper.myPresent2Use", requestMap);
+					}else if(category.equals("productName")) {
+						logger.info("선물함 사용 상품명순");
+						list = mybatis.selectList("GiftMapper.myPresent3Use", requestMap);
+					}else if(category.equals("brandName")) {
+						logger.info("선물함 사용 교환처 이름순");
+						list = mybatis.selectList("GiftMapper.myPresent4Use", requestMap);
+					}
 				}else if(present == 3) {
 					if(category.equals("registrationDate")) {
 						logger.info("내가준 선물 최근 등록순");

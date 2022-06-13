@@ -15,7 +15,7 @@
 	<select id="overlapPhoto" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
-		WHERE img_local_url = #{img_local_url}
+		WHERE (img_local_url = #{img_local_url} OR barcode_number = #{barcode_number})
 		AND device_id = #{device_id}
 	</select>
 	
@@ -228,34 +228,72 @@
 	</select>
 	
 	<!-- 선물함 -->
-	<select id="myPresent1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent1NotUse" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
+		AND use_yn = 0
 		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="myPresent2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent2NotUse" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
+		AND use_yn = 0
 		ORDER BY expiration_period ASC
 	</select>
 	
-	<select id="myPresent3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent3NotUse" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
+		AND use_yn = 0
 		ORDER BY product_name ASC
 	</select>
 	
-	<select id="myPresent4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent4NotUse" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
+		AND use_yn = 0
 		ORDER BY brand ASC
 	</select>
 	<!-- 선물함 -->
+	
+	<!-- 선물함 사용 -->
+	<select id="myPresent1Use" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE present_id = #{user_id}
+		AND use_yn = 1
+		ORDER BY registration_date DESC
+	</select>
+	
+	<select id="myPresent2Use" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE present_id = #{user_id}
+		AND use_yn = 1
+		ORDER BY expiration_period ASC
+	</select>
+	
+	<select id="myPresent3Use" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE present_id = #{user_id}
+		AND use_yn = 1
+		ORDER BY product_name ASC
+	</select>
+	
+	<select id="myPresent4Use" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+		SELECT * FROM
+		GIFTCON
+		WHERE present_id = #{user_id}
+		AND use_yn = 1
+		ORDER BY brand ASC
+	</select>
+	<!-- 선물함 사용 -->
 	
 	<!-- 내가 준 선물 -->
 	<select id="giftPresent1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
@@ -337,5 +375,11 @@
 		WHERE user_id = #{user_id} 
 	</update>
 	
+	<update id="autoUseYnUpdate">
+		UPDATE GIFTCON SET
+		use_yn = 1
+		WHERE use_yn = 0
+		AND expiration_period &lt; CURDATE() 
+	</update>
 	
 </mapper>

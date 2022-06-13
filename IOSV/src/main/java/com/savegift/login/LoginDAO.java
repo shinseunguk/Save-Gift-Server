@@ -435,6 +435,23 @@ public class LoginDAO {
 		}
 	}
 	
+	public String findId(HashMap<String, Object> requestMap) {
+		String result = "";
+		List<LoginVO> list = mybatis.selectList("LoginMapper.checkNamePhone", requestMap);
+		
+		if(list.size() != 0) {
+			for(int i = 0; i<list.size(); i++) {
+				if(i != list.size() - 1) {
+					result += list.get(i).getUser_id()+"&";
+				}else {
+					result += list.get(i).getUser_id();
+				}
+			}
+			return result;
+		}else {
+			return "";
+		}
+	}
 	
 	public boolean certNumberDB(String user_id, String cert_number) {
 		HashMap<String, String> map = new HashMap<String, String>();
