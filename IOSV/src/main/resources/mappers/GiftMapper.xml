@@ -382,4 +382,17 @@
 		AND expiration_period &lt; CURDATE() 
 	</update>
 	
+	<update id="presentTab1">
+		UPDATE GIFTCON SET
+		use_yn = #{use_yn}
+		WHERE seq = #{seq}
+	</update>
+	
+	<update id="presentTab2">
+		UPDATE GIFTCON SET
+		present_id = null,
+		present_message = null
+		WHERE seq = #{seq}
+	</update>	
+	
 </mapper>

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Repository
 public class GiftDAO {
@@ -64,6 +65,29 @@ public class GiftDAO {
 	public int giftPresent(HashMap<String, Object> requestMap) {
 		int result = 0;
 		result = mybatis.update("GiftMapper.giftPresent", requestMap);
+		
+		return result;
+	}
+	
+	public int presentTab(HashMap<String, Object> requestMap) {
+		int result = 0;
+		
+		String index = (String) requestMap.get("index");
+		
+		if(index.equals("one")) {
+			int use_yn = 1;
+			requestMap.put("use_yn", use_yn);
+			result = mybatis.update("GiftMapper.presentTab1", requestMap);
+		}else if(index.equals("two")) {
+			int use_yn = 0;
+			requestMap.put("use_yn", use_yn);
+			result = mybatis.update("GiftMapper.presentTab1", requestMap);
+		}else if(index.equals("three")) {
+			result = mybatis.update("GiftMapper.presentTab2", requestMap);
+		}
+		
+		
+//		result = mybatis.update("GiftMapper.presentTab", requestMap);
 		
 		return result;
 	}
