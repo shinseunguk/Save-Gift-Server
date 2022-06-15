@@ -46,6 +46,11 @@ public class GiftService {
 		return giftDAO.giftPresent(requestMap);
 	}
 	
+//	//기프티콘 선물탭 Action
+	public int presentTab(HashMap<String, Object> requestMap) {
+		return giftDAO.presentTab(requestMap);
+	}
+	
 //	//기프티콘 불러오기 
 	public List<GiftVO> giftSave(HashMap<String, Object> requestMap) {
 		return giftDAO.giftSave(requestMap);

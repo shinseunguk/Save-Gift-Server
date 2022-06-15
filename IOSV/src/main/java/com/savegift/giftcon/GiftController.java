@@ -194,6 +194,20 @@ public class GiftController {
 		}
 	}
 	
+	@RequestMapping(value = "/present/tab", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public boolean presentTab(@RequestBody HashMap<String, Object> requestMap){
+		logger.info("/presentTab -------> " + requestMap.toString());
+		
+		int result = giftService.presentTab(requestMap);
+		
+		if(result == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 //	
 //	@RequestMapping(value = "/login", method = RequestMethod.POST , produces = "application/json")
 //	@ResponseBody
