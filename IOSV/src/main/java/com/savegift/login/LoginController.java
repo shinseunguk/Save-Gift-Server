@@ -146,11 +146,10 @@ public class LoginController {
 	public LoginVO findPhone(@RequestBody HashMap<String, Object> requestMap){
 		logger.info("phone_number .. "+ (String) requestMap.get("phone_number"));
 		
-		String phone_number_origin = (String) requestMap.get("phone_number"); // 아이디
-		String phone_number = null;
-		if(phone_number_origin != null) {
-			phone_number = phone_number_origin.replace("-", "");
-		}
+		String phone_number = (String) requestMap.get("phone_number"); // 아이디
+//		if(phone_number_origin != null) {
+//			phone_number = phone_number_origin.replace("-", "");
+//		}
 		
 		
 		if(phone_number != null) {
