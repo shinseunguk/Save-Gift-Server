@@ -8,8 +8,8 @@
 	</select>
 	
 	<insert id="registerGift" parameterType="hashMap">
-		INSERT INTO GIFTCON(user_id, img_url, brand, barcode_number, expiration_period, registration_date, use_yn, share_party_name, device_id, registrant, product_name, img_local_url, present_id, present_message, present_check) 
-		VALUES(#{user_id}, #{img_url}, #{brand}, #{barcode_number}, #{expiration_period}, #{registration_date}, #{use_yn}, #{share_party_name}, #{device_id}, #{registrant}, #{product_name}, #{img_local_url}, NULL, NULL, 0)
+		INSERT INTO GIFTCON(user_id, img_url, brand, barcode_number, expiration_period, registration_date, use_yn, device_id, registrant, product_name, img_local_url, present_id, present_message, present_check) 
+		VALUES(#{user_id}, #{img_url}, #{brand}, #{barcode_number}, #{expiration_period}, #{registration_date}, #{use_yn}, #{device_id}, #{registrant}, #{product_name}, #{img_local_url}, NULL, NULL, 0)
 	</insert>
 	
 	<select id="overlapPhoto" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
