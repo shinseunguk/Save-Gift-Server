@@ -35,8 +35,13 @@ public class LoginDAO {
 	
 	public boolean login(HashMap<String, Object> requestMap) {
 		boolean result = false;
-		
+		String user_id = (String) requestMap.get("user_id");		
 		String userPasswordInput = (String) requestMap.get("user_password");
+		String device_id = (String) requestMap.get("device_id");
+		String index = (String) requestMap.get("index"); // 아이디
+		
+
+		
 		
 		//where절 id가 널이 아닐때 -> 그 id로 비밀번호 불러옴 -> input 비밀번호랑 db 비밀번호랑 비교
 		LoginVO loginVO = mybatis.selectOne("LoginMapper.duplicationid", requestMap);
@@ -44,7 +49,16 @@ public class LoginDAO {
 			String userPasswordDB = mybatis.selectOne("LoginMapper.passwordCrossCheck", requestMap); //DB 비밀번호 불러옴
 			if(userPasswordDB != null) {// DB와 사용자의 입력 값을 비교함 
 				if(userPasswordDB.equals(userPasswordInput)) {
-					result = true;
+					if(index != null) { // 회원정보 수정
+						result = true;
+					}else { // 로그인 로직
+						//user_device 테이블에 user_id update
+						NotificationVO notificationVO = mybatis.selectOne("NotificationMapper.userDevice", device_id);
+						if(notificationVO != null) { // 이미 insert 이력이 있음.
+							mybatis.update("NotificationMapper.userDeviceUserIdUpdate", requestMap);
+							result = true;
+						}
+					}
 				}else {
 					result = false;
 				}
@@ -370,7 +384,7 @@ public class LoginDAO {
 		//user
 			mybatis.delete("LoginMapper.secessionUser", user_id);
 		//user_device
-			mybatis.delete("LoginMapper.secessionUserDevice", user_id);
+//			mybatis.delete("LoginMapper.secessionUserDevice", user_id);
 		
 		return result;
 	}

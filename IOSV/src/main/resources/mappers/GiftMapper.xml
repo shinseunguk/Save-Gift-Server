@@ -395,4 +395,14 @@
 		WHERE seq = #{seq}
 	</update>	
 	
+	<select id="periodSelect" parameterType="String" resultType="com.savegift.giftcon.GiftUserDeviceVO">
+		select * 
+		FROM GIFTCON g, USER_DEVICE ud
+		WHERE (expiration_period &lt; #{mDate} AND expiration_period >= CURDATE())
+		AND g.use_yn = 0
+		AND (g.user_id = ud.user_id OR (g.user_id is null AND g.device_id = ud.device_id))
+		AND (ud.push30 = 1 OR ud.push7 = 1 OR ud.push1 = 1)
+	</select>
+	
+	
 </mapper>
