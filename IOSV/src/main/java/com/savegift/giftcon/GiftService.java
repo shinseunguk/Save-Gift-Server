@@ -1,5 +1,6 @@
 package com.savegift.giftcon;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,5 +65,10 @@ public class GiftService {
 //	//기프티콘 삭제 
 	public boolean giftDelete(HashMap<String, Object> requestMap) {
 		return giftDAO.giftDelete(requestMap);
+	}
+	
+//	//기프티콘 PUSH 추출 
+	public List<GiftUserDeviceVO> getPushList(Date date) {
+		return giftDAO.getPushList(date);
 	}
 }

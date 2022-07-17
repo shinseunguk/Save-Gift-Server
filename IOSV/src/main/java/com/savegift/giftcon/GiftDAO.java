@@ -1,7 +1,14 @@
 package com.savegift.giftcon;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -294,6 +301,135 @@ public class GiftDAO {
 		}else {
 			return false;
 		}
+	}
+	
+//	public List<GiftUserDeviceVO> getPushList(Date date) {
+//		List<GiftUserDeviceVO> list1 = null;
+//		List<GiftUserDeviceVO> list2 = null;
+//		List<GiftUserDeviceVO> list3 = null;
+//
+//        Calendar cal = Calendar.getInstance();
+//        Calendar cal2 = Calendar.getInstance();
+//        Calendar cal3 = Calendar.getInstance();
+//        
+//        cal.setTime(new Date());
+//        cal2.setTime(new Date());
+//        cal3.setTime(new Date());
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//        System.out.println("current: " + df.format(cal.getTime()));
+//
+//        cal.add(Calendar.MONTH, 1);
+//        cal2.add(Calendar.DATE, 7);
+//        cal3.add(Calendar.DATE, 1);
+//        System.out.println("after MONTH: " + df.format(cal.getTime()));
+//        System.out.println("after DATE 7: " + df.format(cal2.getTime()));
+//        System.out.println("after DATE 1: " + df.format(cal3.getTime()));
+//        String mDate1 = df.format(cal.getTime());
+//        String mDate2 = df.format(cal2.getTime());
+//        String mDate3 = df.format(cal3.getTime());
+//        
+//		//30일전 대상자 추출		
+//		list1 = mybatis.selectList("GiftMapper.periodSelect", mDate1);
+//		int[] arr30 = new int[list1.size()];
+//		for(int i = 0 ; i < list1.size() ; i++) {
+//			arr30[i] = list1.get(i).getSeq();
+//			logger.info(list1.get(i).getSeq()+"!");	
+//		}
+//		
+//		//7일전 대상자 추출		
+//		list2 = mybatis.selectList("GiftMapper.periodSelect", mDate2);
+//		int[] arr7 = new int[list2.size()];
+//		for(int i = 0 ; i < list2.size() ; i++) {
+//			arr7[i] = list2.get(i).getSeq();
+//			logger.info(list2.get(i).getSeq()+"@");	
+//		}
+//		
+//		//1일전 대상자 추출
+//		list3 = mybatis.selectList("GiftMapper.periodSelect", mDate3);
+//		int[] arr1 = new int[list3.size()];
+//		for(int i = 0 ; i < list3.size() ; i++) {
+//			arr1[i] = list3.get(i).getSeq();
+////			logger.info(list3.get(i).getSeq()+"#");
+//		}
+//		
+//		System.out.println("");
+//		for(int i = 0 ; i < list1.size() ; i++) {
+//			System.out.print(arr30[i]+" ");
+//		}
+//		System.out.println("");
+//		for(int i = 0 ; i < list2.size() ; i++) {
+//			System.out.print(arr7[i]+" ");
+//		}
+//		System.out.println("");
+//		for(int i = 0 ; i < list3.size() ; i++) {
+//			System.out.print(arr1[i]+" ");
+//		}
+//		
+//		for(int i = 0 ; i < arr30.length ; i++) {
+//			for(int j = 0 ; j < arr7.length ; j++) {
+//				if(arr30[i] == arr7[j]) {
+//					arr7[j] = 0;
+//				}
+//			}
+//		}
+//		
+//		for(int i = 0 ; i < arr30.length ; i++) {
+//			for(int j = 0 ; j < arr1.length ; j++) {
+//				if(arr30[i] == arr1[j]) {
+//					arr1[j] = 0;
+//				}
+//			}
+//		}
+//		
+//		for(int i = 0 ; i < arr7.length ; i++) {
+//			for(int j = 0 ; j < arr1.length ; j++) {
+//				if(arr7[i] == arr1[j]) {
+//					arr1[j] = 0;
+//				}
+//			}
+//		}
+//		
+//		System.out.println("");
+//		for(int i = 0 ; i < list1.size() ; i++) {
+//			System.out.print(arr30[i]+" ");
+//		}
+//		System.out.println("");
+//		for(int i = 0 ; i < list2.size() ; i++) {
+//			System.out.print(arr7[i]+" ");
+//		}
+//		System.out.println("");
+//		for(int i = 0 ; i < list3.size() ; i++) {
+//			System.out.print(arr1[i]+" ");
+//		}
+//		
+//		System.out.println("!!!!!!!!");
+//		for(int i = 0 ; i < list1.size() ; i++) {
+//			if(arr30[i] != 0) {
+//				System.out.println(list1.get(i).getPush_token());	
+//			}
+//		}
+//		
+//		return list1;
+//	}
+	
+	public List<GiftUserDeviceVO> getPushList(Date date) {
+		List<GiftUserDeviceVO> list = null;
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("current: " + df.format(cal.getTime()));
+
+        cal.add(Calendar.MONTH, 1);
+        System.out.println("after MONTH: " + df.format(cal.getTime()));
+        String mDate = df.format(cal.getTime());
+        
+		//30일전 대상자 추출		
+		list = mybatis.selectList("GiftMapper.periodSelect", mDate);
+		for(int i=0; i<list.size(); i++) {
+			System.out.print(list.get(i).getSeq()+" ");
+		}
+		return list;
 	}
 	
 }

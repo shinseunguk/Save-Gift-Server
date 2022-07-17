@@ -34,4 +34,7 @@ public class NotificationService {
 	public boolean deviceInsert(HashMap<String, Object> requestMap){
 		return notificaitionDAO.deviceInsert(requestMap);
 	}
+	public boolean sendPush(){
+		return notificaitionDAO.sendPush();
+	}
 }

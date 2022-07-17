@@ -58,4 +58,20 @@
 		VALUES(#{device_model}, #{device_id}, #{push_token}, #{push_yn}, #{push30}, #{push7}, #{push1})
 	</insert>
 	
+	<update id="userDeviceUpdate" parameterType="hashMap">
+		UPDATE USER_DEVICE
+		SET
+		push_token = #{push_token}
+		WHERE
+		device_id = #{device_id}
+	</update>
+	
+	<update id="userDeviceUserIdUpdate" parameterType="hashMap">
+		UPDATE USER_DEVICE
+		SET
+		user_id = #{user_id}
+		WHERE
+		device_id = #{device_id}
+	</update>
+	
 </mapper>
