@@ -11,12 +11,21 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 		
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+       <property name="locations">
+             <list>
+                    <value>classpath:datasource.properties</value>
+             </list>
+       </property>
+	</bean>     
+		
+	<!-- <context:property-placeholder location="classpath:datasource.properties" /> -->
+		
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-            <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
-            <property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/save_gift?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC" />
-            <property name="username" value="root" />
-            <property name="password" value="altmd!#%24" />
-            <!-- <property name="defaultAutoCommit" value="true" /> -->
+            <property name="driverClassName" value="${jdbc.driverClassName}" />
+            <property name="url" value="${jdbc.url}" />
+            <property name="username" value="${jdbc.username}" />
+            <property name="password" value="${jdbc.password}"/>
     </bean>
     
     <!-- MultipartResolver -->
