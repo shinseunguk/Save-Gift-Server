@@ -9,13 +9,26 @@
 	<!-- 회원가입mapper -->
 	<insert id="register" parameterType="hashMap">
 		INSERT INTO USER 
-		VALUES(#{user_id},#{user_password},#{name},#{phone_number},0,#{email_yn},#{sms_yn}, NOW())
+		VALUES(#{user_id},#{user_password},#{name},#{phone_number},0,#{email_yn},#{sms_yn}, NOW(), null, null)
+	</insert>
+	
+	<!-- 소셜로그인 INSERT mapper -->
+	<insert id="socialLoginInsert" parameterType="hashMap">
+		INSERT INTO USER(user_id, name, phone_number, img_count, email_yn, sms_yn, create_date, social_login, social_token)
+		VALUES(#{user_id},#{name},#{phone_number},0, 1, 1, NOW(), #{social_login}, #{social_token})
 	</insert>
 	
 	<select id="duplicationid" resultType="com.savegift.login.LoginVO">
 		SELECT * FROM
 		USER
 		WHERE user_id = #{user_id}
+	</select>
+	
+	<select id="checkSocialId" resultType="com.savegift.login.LoginVO">
+		SELECT * FROM
+		USER
+		WHERE user_id = #{user_id}
+		AND user_password is null
 	</select>
 	
 	<select id="login" resultType="com.savegift.login.LoginVO">
@@ -240,4 +253,10 @@
 		WHERE name = #{name}
 		AND phone_number = #{phone_number}
 	</select>
+	
+	<update id="deviceUpdate" parameterType="HashMap">
+		UPDATE USER_DEVICE
+		SET user_id = null
+		WHERE device_id = #{device_id}
+	</update>
 </mapper>
