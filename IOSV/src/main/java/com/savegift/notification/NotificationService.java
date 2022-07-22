@@ -21,31 +21,31 @@ import com.savegift.login.LoginVO;
 public class NotificationService {
 	
 	@Autowired
-	NotificationDAO notificaitionDAO;
+	NotificationDAO notificationDAO;
 	
 	@Autowired
 	GiftService giftService;
 
 	public LoginVO status(String user_id){
-		return notificaitionDAO.status(user_id);
+		return notificationDAO.status(user_id);
 	}
-	
 	public NotificationVO status2(String device_id){
-		return notificaitionDAO.status2(device_id);
+		return notificationDAO.status2(device_id);
 	}
-	
 	public boolean notiSetting(HashMap<String, Object> requestMap){
-		return notificaitionDAO.notiSetting(requestMap);
+		return notificationDAO.notiSetting(requestMap);
 	}
-	
 	public String version() {
-		return notificaitionDAO.version();
+		return notificationDAO.version();
 	}
-	
 	public boolean deviceInsert(HashMap<String, Object> requestMap){
-		return notificaitionDAO.deviceInsert(requestMap);
+		return notificationDAO.deviceInsert(requestMap);
 	}
 	public boolean sendPush(){
-		return notificaitionDAO.sendPush();
+		return notificationDAO.sendPush();
 	}
+	public boolean friendRequestPush(HashMap<String, Object> requestMap){
+		return notificationDAO.friendRequestPush(requestMap);
+	}
+	
 }

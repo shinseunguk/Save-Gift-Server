@@ -56,8 +56,8 @@ public class LoginDAO {
 						NotificationVO notificationVO = mybatis.selectOne("NotificationMapper.userDevice", device_id);
 						if(notificationVO != null) { // 이미 insert 이력이 있음.
 							mybatis.update("NotificationMapper.userDeviceUserIdUpdate", requestMap);
-							result = true;
 						}
+						result = true;
 					}
 				}else {
 					result = false;
@@ -68,9 +68,36 @@ public class LoginDAO {
 		return result;
 	}
 	
+	public boolean socialLogin(HashMap<String, Object> requestMap) {
+		boolean result = false;
+		int resultInt = 0;
+		String index = (String) requestMap.get("index"); // 아이디
+		
+		if(index.equals("insert")) { // 소셜로그인 처리 로직
+			resultInt = mybatis.insert("LoginMapper.socialLoginInsert", requestMap);	
+			
+			if(resultInt != 0) {
+				result = true;
+			}
+		}else { // 일반로그인, 소셜로그인 처리 로직
+			
+		}
+		return result;
+	}
+	
 	public boolean duplicationid(String user_id) {
 		boolean result = false;
 		LoginVO loginVO = mybatis.selectOne("LoginMapper.duplicationid", user_id);
+		
+		if(loginVO != null) { //SELECT => TRUE
+			result = true;
+		}
+		return result;
+	}
+	
+	public boolean checkSocial(String user_id) {
+		boolean result = false;
+		LoginVO loginVO = mybatis.selectOne("LoginMapper.checkSocialId", user_id);
 		
 		if(loginVO != null) {
 			result = true;
@@ -480,6 +507,11 @@ public class LoginDAO {
 			mybatis.insert("LoginMapper.emailCheckInsert", map);
 			return false;
 		}
+	}
+	
+	public boolean deviceDelete(HashMap<String, Object> requestMap) {
+		mybatis.update("LoginMapper.deviceUpdate", requestMap);
+		return true;
 	}
 	
 	public String sendSMS(String phone_number, String certNum, String device_id, HashMap<String, String> params) {

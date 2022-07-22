@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.savegift.notification.NotificationDAO;
+
 @Repository
 public class GiftDAO {
 	
@@ -24,6 +26,9 @@ public class GiftDAO {
 	
 	@Autowired
     SqlSession mybatis;
+	
+	@Autowired
+	NotificationDAO notificationDAO;
 	
 	
 	//TEST
@@ -72,6 +77,9 @@ public class GiftDAO {
 	public int giftPresent(HashMap<String, Object> requestMap) {
 		int result = 0;
 		result = mybatis.update("GiftMapper.giftPresent", requestMap);
+		if(result == 1) {
+			notificationDAO.friendRequestPush(requestMap);
+		}
 		
 		return result;
 	}

@@ -180,6 +180,110 @@ public class NotificationDAO {
 		}
 	}
 	
+	public boolean friendRequestPush(HashMap<String, Object> requestMap) {
+		List<UserDeviceVO> list = null;
+		List<UserDeviceVO> list1 = null;
+		String[] registerIdsArr = null; 
+		
+		//FCM 발송 URL
+		String FMCurl = "https://fcm.googleapis.com/fcm/send";
+		String body = null;
+		
+		String user_id = (String) requestMap.get("user_id");
+		String friend = (String) requestMap.get("friend");
+		String index = (String) requestMap.get("index");
+		
+		if(index.equals("friendRequest")) {
+			list = mybatis.selectList("NotificationMapper.friendRequestPush", friend);
+			body = user_id+"님이 친구를 요청했습니다.\n앱내 친구 TAB에서 확인해주세요.";
+		}else if(index.equals("friendPresent")) {
+			list = mybatis.selectList("NotificationMapper.presentPush", requestMap);
+			body = "선물이 도착했습니다. 선물함 TAB에서 선물을 확인해주세요.";
+		}
+		
+		
+		try{
+			for(int i = 0 ; i < list.size() ; i ++) {
+				//알림 발송
+				URL url = new URL(FMCurl);
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				
+				conn.setUseCaches(false);
+				conn.setDoInput(true);
+				conn.setDoOutput(true);
+				conn.setConnectTimeout(5000);
+				conn.setReadTimeout(5000);
+				
+				conn.setRequestMethod("POST");
+				conn.setRequestProperty("Authorization","key="+authKey);
+				conn.setRequestProperty("Content-Type","application/json");
+				
+				
+				//알림 발송용 Parameter 설정
+				JSONObject json = new JSONObject();
+				
+//				body = user_id+"님이 친구를 요청했습니다.\n앱내 친구TAB에서 확인해주세요.";
+				
+				//단건의 경우 to, 다건인 경우 registration_ids		
+				json.put("to", list.get(i).getPush_token());
+				JSONObject info = new JSONObject();
+				info.put("title", "기프티콘 수첩");
+				info.put("body", body);
+				info.put("sound", "default");
+				json.put("notification", info);
+				
+				
+				//메시지 발송 처리
+				OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+				wr.write(json.toString());
+				wr.flush();
+				
+				
+				
+				//발송 결과
+				OutputStream rostream = conn.getOutputStream();
+				InputStream ristream = conn.getInputStream();
+				
+				final int length = 50000;
+				byte[] bytes = new byte[length];
+				int bytesRead = 0;
+				
+				
+				while ((bytesRead = ristream.read(bytes, 0, length)) > 0) {
+					
+					String tmp = new String(bytes, "utf-8");
+					
+					//	out.print("{\"multicast_id\":5185012636408180766,\"success\":1,\"failure\":0,\"canonical_ids\":0,\"results\":[{\"message_id\":\"0:1484811869998813%b347b3eab347b3ea\"}]}");
+					if(tmp.trim().length()>0){
+						int beforeLen = tmp.length();
+						int afterLen = 0;
+						rostream.write(bytes, 0, bytesRead);
+					}
+				}	
+				
+				rostream.flush();        
+				
+				
+				if(wr != null){
+					wr.close();	
+				}
+				
+				if(ristream != null){
+					ristream.close();
+				}
+				
+				if(rostream != null){
+					rostream.close();        	
+				}
+			}
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.info("FCM SEND error \n" + e);
+			return false;
+		}
+	}
+	
 	public List<GiftUserDeviceVO> pushList(){
 
 		Date date = new Date();
