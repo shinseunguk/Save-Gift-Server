@@ -74,4 +74,16 @@
 		device_id = #{device_id}
 	</update>
 	
+	<select id="friendRequestPush" parameterType="String" resultType="com.savegift.notification.UserDeviceVO">
+		SELECT * FROM USER_DEVICE
+		WHERE
+		user_id = #{friend}
+	</select>
+	
+	<select id="presentPush" parameterType="String" resultType="com.savegift.notification.UserDeviceVO">
+		SELECT * FROM USER_DEVICE
+		WHERE
+		user_id = #{present_id}
+	</select>
+	
 </mapper>
