@@ -185,6 +185,7 @@ public class GiftController {
 	public boolean giftPresent(@RequestBody HashMap<String, Object> requestMap){
 		logger.info("/giftPresent -------> " + requestMap.toString());
 		
+		requestMap.put("index", "friendPresent");
 		int result = giftService.giftPresent(requestMap);
 		
 		if(result == 1) {

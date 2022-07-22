@@ -28,8 +28,14 @@ public class LoginService {
 	public boolean duplicationid(String user_id) {
 		return loginDAO.duplicationid(user_id);
 	}
+	public boolean checkSocial(String user_id) {
+		return loginDAO.checkSocial(user_id);
+	}
 	public boolean login(HashMap<String, Object> requestMap) {
 		return loginDAO.login(requestMap);
+	}
+	public boolean socialLogin(HashMap<String, Object> requestMap) {
+		return loginDAO.socialLogin(requestMap);
 	}
 	public LoginVO findEmail(String user_id) {
 		return loginDAO.findEmail(user_id);
@@ -87,5 +93,8 @@ public class LoginService {
 	}
 	public boolean certNumberDB(String user_id, String cert_number) {
 		return loginDAO.certNumberDB(user_id, cert_number);
+	}
+	public boolean deviceDelete(HashMap<String, Object> requestMap) {
+		return loginDAO.deviceDelete(requestMap);
 	}
 }

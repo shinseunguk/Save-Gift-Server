@@ -10,7 +10,7 @@ public class LoginVO {
 	private int email_yn;
 	private int sms_yn;
 	private String create_date;
-	
+	private String social_login;
 	public String getUser_id() {
 		return user_id;
 	}
@@ -56,14 +56,20 @@ public class LoginVO {
 	public int getSms_yn() {
 		return sms_yn;
 	}
-	public void setSms_yn(int ems_yn) {
-		this.sms_yn = ems_yn;
+	public void setSms_yn(int sms_yn) {
+		this.sms_yn = sms_yn;
 	}
 	public String getCreate_date() {
 		return create_date;
 	}
 	public void setCreate_date(String create_date) {
 		this.create_date = create_date;
+	}
+	public String getSocial_login() {
+		return social_login;
+	}
+	public void setSocial_login(String social_login) {
+		this.social_login = social_login;
 	}
 	
 }

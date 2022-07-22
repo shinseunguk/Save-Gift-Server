@@ -6,20 +6,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.savegift.notification.NotificationService;
 
 
 /**
@@ -32,6 +32,9 @@ public class LoginController {
 	
 	@Autowired
 	LoginService loginService;
+	
+	@Autowired
+	NotificationService notificationService; 
 	
     SHA256 sha256 = new SHA256();
 	
@@ -49,6 +52,11 @@ public class LoginController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/marketing/agree", method = RequestMethod.GET)
+	public String marketing(Locale locale, Model model) {
+		return "register2";
+	}
+	
 	
 	@RequestMapping(value = "/duplicationid", method = RequestMethod.GET)
 	@ResponseBody
@@ -57,6 +65,17 @@ public class LoginController {
 		String user_id = request.getParameter("user_id");
 		logger.info("/duplicationid .. user_id : " + user_id);
 		result = loginService.duplicationid(user_id);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/check/social", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean checkSocial(HttpServletRequest request){
+		boolean result;
+		String user_id = request.getParameter("user_id");
+		logger.info("/checkSocial .. user_id : " + user_id);
+		result = loginService.checkSocial(user_id);
 		
 		return result;
 	}
@@ -123,6 +142,24 @@ public class LoginController {
 		
         result = loginService.login(requestMap);
 		
+		return result;
+	}
+	
+	@RequestMapping(value = "/social/login", method = RequestMethod.POST , produces = "application/json")
+//	@RequestMapping(value = "/social/login", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean socialLogin(@RequestBody HashMap<String, Object> requestMap){
+		boolean result = false;
+		//user_id
+		//name
+		//social_login
+		//social_token
+		//index
+		//phone_number
+		
+		logger.info(requestMap.toString());
+		
+		result = loginService.socialLogin(requestMap);
 		return result;
 	}
 	
@@ -249,13 +286,17 @@ public class LoginController {
         String friend = userIdName.substring(0, idx);
         String name = nameOrigin.substring(0, nameOrigin.length()-1);
         
-        logger.info("user_id ... "+ user_id);
-        logger.info("friend ... "+ friend);
+        logger.info("user_id ... "+ user_id);// 요청 한 사람
+        logger.info("friend ... "+ friend);// 요청 당한 사람
         logger.info("name ... "+ name);
 
         int result = loginService.waitFriend(user_id, friend, name);
         
         logger.info("/waitFriend result -------> " + result);
+        
+        requestMap.put("friend", friend);
+        requestMap.put("index", "friendRequest");
+        notificationService.friendRequestPush(requestMap);
         
         return result;
 	}
@@ -450,5 +491,12 @@ public class LoginController {
 		result = loginService.findId(requestMap);
 		
 		return result;
+	}
+	
+	@RequestMapping(value = "/device/delete", method = RequestMethod.POST , produces = "application/json")
+	@ResponseBody
+	public boolean deviceDelete(@RequestBody HashMap<String, Object> requestMap){
+		loginService.deviceDelete(requestMap);
+		return true;
 	}
 }
