@@ -52,8 +52,13 @@ public class LoginController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/privacy/policy", method = RequestMethod.GET)
+	public String privacyPolicy() {
+		return "privacyPolicy";
+	}
+	
 	@RequestMapping(value = "/marketing/agree", method = RequestMethod.GET)
-	public String marketing(Locale locale, Model model) {
+	public String marketing() {
 		return "register2";
 	}
 	
