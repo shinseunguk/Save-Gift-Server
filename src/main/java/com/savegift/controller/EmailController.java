@@ -1,4 +1,4 @@
-package spring.service;
+package com.savegift.controller;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.savegift.login.LoginService;
+import com.savegift.service.UserService;
+import com.savegift.service.MailService;
 
 @Controller
 public class EmailController {
@@ -26,7 +27,7 @@ public class EmailController {
 	private MailService mailService;
 	
 	@Autowired
-	private LoginService loginService;
+	private UserService userService;
 	
 	Properties props = new Properties();
 
@@ -47,7 +48,7 @@ public class EmailController {
 			numStr += ran;
 		}
 		
-		result = loginService.checkEmailInfo(requestMap);
+		result = userService.checkEmailInfo(requestMap);
 		
 		if(result) {
 
@@ -61,7 +62,7 @@ public class EmailController {
 			String body = "안녕하세요.\n\n기프티콘 저장소 인증을 위한 인증번호가 발급되었습니다.\n아래의 인증번호 복사하거나 직접 입력하여 이메일 인증을 완료해주세요.\n\n"+ numStr;
 			
 			mailService.sendEmail(email, addr, subject, body);
-			loginService.certNumberDB(email, numStr);
+			userService.certNumberDB(email, numStr);
 			
 			return true;	
 		}else {
@@ -74,7 +75,7 @@ public class EmailController {
 	@ResponseBody
 	public boolean checkEmail(@RequestBody HashMap<String, Object> requestMap) throws Exception {
 		boolean result = false;
-		result = loginService.checkEmail(requestMap);
+		result = userService.checkEmail(requestMap);
 		
 		return result;
 	}

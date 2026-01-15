@@ -1,4 +1,4 @@
-package com.savegift.login;
+package com.savegift.controller;
 
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -19,24 +19,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.savegift.notification.NotificationService;
+import com.savegift.service.NotificationService;
+import com.savegift.service.UserService;
+import com.savegift.domain.User;
+import com.savegift.domain.Friend;
+import com.savegift.util.SHA256Util;
 
 
 /**
  * Handles requests for the application home page. git test gt
  */
 @Controller
-public class LoginController {
+public class UserController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
-	LoginService loginService;
+	UserService userService;
 	
 	@Autowired
 	NotificationService notificationService; 
 	
-    SHA256 sha256 = new SHA256();
+    SHA256Util sha256Util = new SHA256Util();
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -69,7 +73,7 @@ public class LoginController {
 		boolean result;
 		String user_id = request.getParameter("user_id");
 		logger.info("/duplicationid .. user_id : " + user_id);
-		result = loginService.duplicationid(user_id);
+		result = userService.duplicationid(user_id);
 		
 		return result;
 	}
@@ -80,7 +84,7 @@ public class LoginController {
 		boolean result;
 		String user_id = request.getParameter("user_id");
 		logger.info("/checkSocial .. user_id : " + user_id);
-		result = loginService.checkSocial(user_id);
+		result = userService.checkSocial(user_id);
 		
 		return result;
 	}
@@ -100,7 +104,7 @@ public class LoginController {
         
         //SHA256으로 암호화된 비밀번호
 		try {
-			String cryptogram = sha256.encrypt((String) requestMap.get("user_password"));
+			String cryptogram = sha256Util.encrypt((String) requestMap.get("user_password"));
 			requestMap.put("user_password", "fewnlwll3k2lnkqq"+cryptogram+"mmlwen5i4v3bbdui2");
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
@@ -109,7 +113,7 @@ public class LoginController {
 		}
 //		fewnlwll3k2lnkqq85ba64cb70cf7296c14420d58259b038840d7ebcc54937867a4345112779ab83mmlwen5i4v3bbdui2
 //        logger.info("userInfo2 ####" + requestMap.toString());
-        int result = loginService.register(requestMap);
+        int result = userService.register(requestMap);
         
         if (result == 1){ //insert 성공(회원가입 성공)
         	logger.info("회원가입 성공");
@@ -137,7 +141,7 @@ public class LoginController {
         
         //SHA256으로 암호화된 비밀번호
 		try {
-			String cryptogram = sha256.encrypt((String) requestMap.get("user_password"));
+			String cryptogram = sha256Util.encrypt((String) requestMap.get("user_password"));
 			requestMap.put("user_password", "fewnlwll3k2lnkqq"+cryptogram+"mmlwen5i4v3bbdui2");
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
@@ -145,7 +149,7 @@ public class LoginController {
 			e.printStackTrace();
 		}
 		
-        result = loginService.login(requestMap);
+        result = userService.login(requestMap);
 		
 		return result;
 	}
@@ -164,13 +168,13 @@ public class LoginController {
 		
 		logger.info(requestMap.toString());
 		
-		result = loginService.socialLogin(requestMap);
+		result = userService.socialLogin(requestMap);
 		return result;
 	}
 	
 	@RequestMapping(value = "/findemail", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
-	public LoginVO findEmail(@RequestBody HashMap<String, Object> requestMap){
+	public User findEmail(@RequestBody HashMap<String, Object> requestMap){
 		logger.info("user_id .. "+ (String) requestMap.get("user_id"));
 		
 		String user_id = (String) requestMap.get("user_id"); // 아이디
@@ -178,14 +182,14 @@ public class LoginController {
 		if(user_id != null) {
 			logger.info("친구추가 아이디 ... user_id : " + user_id);
 		}
-		LoginVO loginvo = loginService.findEmail(user_id);
+		User loginvo = userService.findEmail(user_id);
 		
 		return loginvo;
 	}
 	
 	@RequestMapping(value = "/findphone", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
-	public LoginVO findPhone(@RequestBody HashMap<String, Object> requestMap){
+	public User findPhone(@RequestBody HashMap<String, Object> requestMap){
 		logger.info("phone_number .. "+ (String) requestMap.get("phone_number"));
 		
 		String phone_number = (String) requestMap.get("phone_number"); // 아이디
@@ -197,7 +201,7 @@ public class LoginController {
 		if(phone_number != null) {
 			logger.info("친구추가 핸드폰 번호 ... phone_number : " + phone_number);
 		}
-		LoginVO loginvo = loginService.findPhone(phone_number);
+		User loginvo = userService.findPhone(phone_number);
 		
 		return loginvo;
 	}
@@ -228,7 +232,7 @@ public class LoginController {
         logger.info("friend ... "+ friend);
         logger.info("name ... "+ name);
 
-        int result = loginService.addFriend(user_id, friend, name);
+        int result = userService.addFriend(user_id, friend, name);
         logger.info("/addFriend... "+ result);
         
         return result;
@@ -250,7 +254,7 @@ public class LoginController {
         logger.info("user_id ... "+ user_id);
         logger.info("friend ... "+ friend);
 
-        int result = loginService.deleteFriendWait(user_id, friend, index);
+        int result = userService.deleteFriendWait(user_id, friend, index);
         logger.info("/deleteFriendWait... "+ result);
         
         return result;
@@ -269,7 +273,7 @@ public class LoginController {
 		logger.info("user_id ... "+ user_id);
 		logger.info("friend ... "+ friend);
 		
-		int result = loginService.deleteFriend(user_id, friend);
+		int result = userService.deleteFriend(user_id, friend);
 		logger.info("/deleteFriend... "+ result);
 		
 		return result;
@@ -295,7 +299,7 @@ public class LoginController {
         logger.info("friend ... "+ friend);// 요청 당한 사람
         logger.info("name ... "+ name);
 
-        int result = loginService.waitFriend(user_id, friend, name);
+        int result = userService.waitFriend(user_id, friend, name);
         
         logger.info("/waitFriend result -------> " + result);
         
@@ -326,7 +330,7 @@ public class LoginController {
 		logger.info("friend ... "+ friend);
 		logger.info("name ... "+ name);
 		
-		String result = loginService.statusFriend(user_id, friend, name);
+		String result = userService.statusFriend(user_id, friend, name);
 		
 		logger.info("/statusFriend "+ result);
 		return result;
@@ -335,17 +339,17 @@ public class LoginController {
 	@RequestMapping(value = "/getRequestFriend", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
 	public String getRequestFriend(@RequestBody HashMap<String, Object> requestMap){
-		List<FriendVO> list = null;
-		List<FriendVO> list2 = null;
+		List<Friend> list = null;
+		List<Friend> list2 = null;
 		String returnString = "";
 		logger.info("/getRequestFriend user_id .. "+ (String) requestMap.get("user_id"));
 		
 		String user_id = (String) requestMap.get("user_id");
 		
 		//내가 신청한 친구
-		list = loginService.getRequestFriend(user_id);
+		list = userService.getRequestFriend(user_id);
 		//내가 신청받은 친구
-		list2 = loginService.getRequestedFriend(user_id);
+		list2 = userService.getRequestedFriend(user_id);
 //		logger.info("list "+ list);
 //		logger.info("list2 "+ list2);
 		
@@ -403,13 +407,13 @@ public class LoginController {
 	
 	@RequestMapping(value = "/getFriend", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
-	public FriendVO getFriend(@RequestBody HashMap<String, Object> requestMap){
-		FriendVO friendVO = null;
+	public Friend getFriend(@RequestBody HashMap<String, Object> requestMap){
+		Friend friendVO = null;
 		logger.info("/getFriend user_id .. "+ (String) requestMap.get("user_id"));
 		
 		String user_id = (String) requestMap.get("user_id");
 		
-		friendVO = loginService.getFriend(user_id);
+		friendVO = userService.getFriend(user_id);
 		
 		if(friendVO != null){
 			logger.info("/getFriend return ---> " + friendVO.getFriend());	
@@ -424,16 +428,16 @@ public class LoginController {
 		boolean result = false;
 		
 		String user_id = (String) requestMap.get("user_id");
-		result = loginService.secession(user_id);
+		result = userService.secession(user_id);
 		
 		return true;
 	}
 	
 	@RequestMapping(value = "/userinfo", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
-	public LoginVO userInfo(@RequestBody HashMap<String, Object> requestMap){
+	public User userInfo(@RequestBody HashMap<String, Object> requestMap){
 		String user_id = (String) requestMap.get("user_id");
-		LoginVO	loginVO = loginService.userInfo(user_id);
+		User	loginVO = userService.userInfo(user_id);
 		
 		return loginVO;
 	}
@@ -450,7 +454,7 @@ public class LoginController {
 		map.put("user_id", user_id);
 		map.put("name", name);
 		
-		result = loginService.userinfoName(map);
+		result = userService.userinfoName(map);
 		
 		return result;
 	}
@@ -467,7 +471,7 @@ public class LoginController {
 		
 		//SHA256으로 암호화된 비밀번호
 		try {
-			String cryptogram = sha256.encrypt((String) requestMap.get("user_password"));
+			String cryptogram = sha256Util.encrypt((String) requestMap.get("user_password"));
 			map.put("user_password", "fewnlwll3k2lnkqq"+cryptogram+"mmlwen5i4v3bbdui2");
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
@@ -475,7 +479,7 @@ public class LoginController {
 			e.printStackTrace();
 		}
 		
-		result = loginService.userinfoPassword(map);
+		result = userService.userinfoPassword(map);
 		
 		return result;
 	}
@@ -484,7 +488,7 @@ public class LoginController {
 	@ResponseBody
 	public boolean checkNamePhone(@RequestBody HashMap<String, Object> requestMap){
 		boolean result = false;
-		result = loginService.checkNamePhone(requestMap);
+		result = userService.checkNamePhone(requestMap);
 		
 		return result;
 	}
@@ -493,7 +497,7 @@ public class LoginController {
 	@ResponseBody
 	public String findId(@RequestBody HashMap<String, Object> requestMap){
 		String result = "";
-		result = loginService.findId(requestMap);
+		result = userService.findId(requestMap);
 		
 		return result;
 	}
@@ -501,7 +505,7 @@ public class LoginController {
 	@RequestMapping(value = "/device/delete", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
 	public boolean deviceDelete(@RequestBody HashMap<String, Object> requestMap){
-		loginService.deviceDelete(requestMap);
+		userService.deviceDelete(requestMap);
 		return true;
 	}
 }

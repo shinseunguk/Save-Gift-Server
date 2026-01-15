@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="NotificationMapper">
 
-	<select id="status" resultType="com.savegift.login.LoginVO">
+	<select id="status" resultType="com.savegift.domain.User">
 		SELECT name, email_yn, sms_yn  
 		FROM USER
 		WHERE user_id = #{user_id}
 	</select>
 	
-	<select id="status2" resultType="com.savegift.notification.NotificationVO">
+	<select id="status2" resultType="com.savegift.domain.Notification">
 		SELECT *  
 		FROM USER_DEVICE
 		WHERE device_id = #{device_id}
@@ -39,13 +39,13 @@
 		FROM version
 	</select>
 	
-	<select id="userDevice" resultType="com.savegift.notification.NotificationVO" parameterType="String">
+	<select id="userDevice" resultType="com.savegift.domain.Notification" parameterType="String">
 		SELECT *  
 		FROM USER_DEVICE
 		WHERE device_id = #{device_id}
 	</select>
 	
-	<select id="userDeviceUserId" resultType="com.savegift.notification.NotificationVO" parameterType="String">
+	<select id="userDeviceUserId" resultType="com.savegift.domain.Notification" parameterType="String">
 		SELECT *  
 		FROM USER_DEVICE
 		WHERE user_id = #{user_id}
@@ -74,13 +74,13 @@
 		device_id = #{device_id}
 	</update>
 	
-	<select id="friendRequestPush" parameterType="String" resultType="com.savegift.notification.UserDeviceVO">
+	<select id="friendRequestPush" parameterType="String" resultType="com.savegift.domain.UserDevice">
 		SELECT * FROM USER_DEVICE
 		WHERE
 		user_id = #{friend}
 	</select>
 	
-	<select id="presentPush" parameterType="String" resultType="com.savegift.notification.UserDeviceVO">
+	<select id="presentPush" parameterType="String" resultType="com.savegift.domain.UserDevice">
 		SELECT * FROM USER_DEVICE
 		WHERE
 		user_id = #{present_id}

@@ -1,8 +1,8 @@
-package com.savegift.notification;
+package com.savegift.domain;
 
 import java.sql.Date;
 
-public class NotificationVO {
+public class Notification {
 	String user_id;
 	String device_model;
 	String device_id;

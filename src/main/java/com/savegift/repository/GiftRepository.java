@@ -1,4 +1,4 @@
-package com.savegift.giftcon;
+package com.savegift.repository;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,18 +17,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.savegift.notification.NotificationDAO;
+import com.savegift.domain.Gift;
+import com.savegift.domain.GiftUserDevice;
 
 @Repository
-public class GiftDAO {
-	
-	private static final Logger logger = LoggerFactory.getLogger(GiftDAO.class);
-	
+public class GiftRepository {
+
+	private static final Logger logger = LoggerFactory.getLogger(GiftRepository.class);
+
 	@Autowired
     SqlSession mybatis;
-	
+
 	@Autowired
-	NotificationDAO notificationDAO;
+	NotificationRepository notificationRepository;
 	
 	
 	//TEST
@@ -49,7 +50,7 @@ public class GiftDAO {
 	
 	public int overlapPhoto(HashMap<String, Object> requestMap) {
 		int result = 0;
-		GiftVO giftVo = mybatis.selectOne("GiftMapper.overlapPhoto", requestMap);
+		Gift giftVo = mybatis.selectOne("GiftMapper.overlapPhoto", requestMap);
 		
 		if(giftVo != null) {
 			result = 1;
@@ -78,7 +79,7 @@ public class GiftDAO {
 		int result = 0;
 		result = mybatis.update("GiftMapper.giftPresent", requestMap);
 		if(result == 1) {
-			notificationDAO.friendRequestPush(requestMap);
+			notificationRepository.friendRequestPush(requestMap);
 		}
 		
 		return result;
@@ -107,9 +108,9 @@ public class GiftDAO {
 		return result;
 	}
 	
-	public List<GiftVO> giftSave(HashMap<String, Object> requestMap) {
+	public List<Gift> giftSave(HashMap<String, Object> requestMap) {
 		int present = 0;
-		List<GiftVO> list = null;
+		List<Gift> list = null;
 		logger.info("giftSave --------> \n" + requestMap.toString());
 //		mybatis.selectList("GiftMapper.overlapPhoto", requestMap);
 		
@@ -277,8 +278,8 @@ public class GiftDAO {
 		return list;
 	}
 	
-	public List<GiftVO> giftDetail(HashMap<String, Object> requestMap) {
-		List<GiftVO> list = null;
+	public List<Gift> giftDetail(HashMap<String, Object> requestMap) {
+		List<Gift> list = null;
 		logger.info("giftDetail --------> \n" + requestMap.toString());
 //		mybatis.selectList("GiftMapper.overlapPhoto", requestMap);
 		
@@ -311,10 +312,10 @@ public class GiftDAO {
 		}
 	}
 	
-//	public List<GiftUserDeviceVO> getPushList(Date date) {
-//		List<GiftUserDeviceVO> list1 = null;
-//		List<GiftUserDeviceVO> list2 = null;
-//		List<GiftUserDeviceVO> list3 = null;
+//	public List<GiftUserDevice> getPushList(Date date) {
+//		List<GiftUserDevice> list1 = null;
+//		List<GiftUserDevice> list2 = null;
+//		List<GiftUserDevice> list3 = null;
 //
 //        Calendar cal = Calendar.getInstance();
 //        Calendar cal2 = Calendar.getInstance();
@@ -420,8 +421,8 @@ public class GiftDAO {
 //		return list1;
 //	}
 	
-	public List<GiftUserDeviceVO> getPushList(Date date) {
-		List<GiftUserDeviceVO> list = null;
+	public List<GiftUserDevice> getPushList(Date date) {
+		List<GiftUserDevice> list = null;
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());

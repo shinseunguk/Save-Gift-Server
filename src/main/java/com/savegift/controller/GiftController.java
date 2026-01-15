@@ -1,4 +1,4 @@
-package com.savegift.giftcon;
+package com.savegift.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.savegift.service.GiftService;
+import com.savegift.domain.Gift;
 
 /**
  * Handles requests for the application home page.
@@ -117,8 +119,8 @@ public class GiftController {
 	
 	@RequestMapping(value = "/gift/save", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
-	public List<GiftVO> registerGift(@RequestBody HashMap<String, Object> requestMap){
-		List<GiftVO> list = null;
+	public List<Gift> registerGift(@RequestBody HashMap<String, Object> requestMap){
+		List<Gift> list = null;
 		list = giftService.giftSave(requestMap);
 		
 		if(list != null) {
@@ -133,9 +135,9 @@ public class GiftController {
 	
 	@RequestMapping(value = "/gift/detail", method = RequestMethod.POST , produces = "application/json")
 	@ResponseBody
-	public List<GiftVO> giftDetail(@RequestBody HashMap<String, Object> requestMap){
+	public List<Gift> giftDetail(@RequestBody HashMap<String, Object> requestMap){
 		logger.info("giftDetail requestMap... " + requestMap.toString());
-		List<GiftVO> list = giftService.giftDetail(requestMap);;
+		List<Gift> list = giftService.giftDetail(requestMap);;
 		
 		return list;
 	}

@@ -1,4 +1,4 @@
-package com.savegift.notification;
+package com.savegift.repository;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,21 +26,22 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Repository;
 
-import com.savegift.giftcon.GiftDAO;
-import com.savegift.giftcon.GiftUserDeviceVO;
-import com.savegift.login.LoginVO;
+import com.savegift.domain.GiftUserDevice;
+import com.savegift.domain.Notification;
+import com.savegift.domain.User;
+import com.savegift.domain.UserDevice;
 
 @Repository
 @PropertySource("classpath:datasource.properties")
-public class NotificationDAO {
+public class NotificationRepository {
 	
-	private static final Logger logger = LoggerFactory.getLogger(NotificationDAO.class);
+	private static final Logger logger = LoggerFactory.getLogger(NotificationRepository.class);
 	
 	@Autowired
     SqlSession mybatis;
 	
 	@Autowired
-	GiftDAO giftDAO;
+	GiftRepository giftRepository;
 	
 	@Value("${fcm.keyValue}")
 	private String authKey;
@@ -51,7 +52,7 @@ public class NotificationDAO {
 	}
 	
 	public boolean sendPush() {
-		List<GiftUserDeviceVO> resultList = new ArrayList<GiftUserDeviceVO>();
+		List<GiftUserDevice> resultList = new ArrayList<GiftUserDevice>();
 		
 		String[] registerIdsArr = null; 
 		
@@ -181,8 +182,8 @@ public class NotificationDAO {
 	}
 	
 	public boolean friendRequestPush(HashMap<String, Object> requestMap) {
-		List<UserDeviceVO> list = null;
-		List<UserDeviceVO> list1 = null;
+		List<UserDevice> list = null;
+		List<UserDevice> list1 = null;
 		String[] registerIdsArr = null; 
 		
 		//FCM 발송 URL
@@ -284,14 +285,14 @@ public class NotificationDAO {
 		}
 	}
 	
-	public List<GiftUserDeviceVO> pushList(){
+	public List<GiftUserDevice> pushList(){
 
 		Date date = new Date();
-		List<GiftUserDeviceVO> list = new ArrayList<GiftUserDeviceVO>();
-		List<GiftUserDeviceVO> list30 = new ArrayList<GiftUserDeviceVO>();
-		List<GiftUserDeviceVO> list7 = new ArrayList<GiftUserDeviceVO>();
-		List<GiftUserDeviceVO> list1 = new ArrayList<GiftUserDeviceVO>();
-		List<GiftUserDeviceVO> resultList = new ArrayList<GiftUserDeviceVO>();
+		List<GiftUserDevice> list = new ArrayList<GiftUserDevice>();
+		List<GiftUserDevice> list30 = new ArrayList<GiftUserDevice>();
+		List<GiftUserDevice> list7 = new ArrayList<GiftUserDevice>();
+		List<GiftUserDevice> list1 = new ArrayList<GiftUserDevice>();
+		List<GiftUserDevice> resultList = new ArrayList<GiftUserDevice>();
 		
 		Date[] arr30 = null;
 		Date[] arr7 = null;
@@ -314,7 +315,7 @@ public class NotificationDAO {
 	      Date mDate2 = cal2.getTime();
 	      Date mDate3 = cal3.getTime();
 	      
-		list = giftDAO.getPushList(date);
+		list = giftRepository.getPushList(date);
 		
 		for(int i = 0 ; i < list.size() ; i++) {
 			if(list.get(i).getPush30() == 1) {
@@ -368,8 +369,8 @@ public class NotificationDAO {
 		return resultList;
 	}
 	
-	public LoginVO status(String user_id) {
-		LoginVO loginVO = mybatis.selectOne("NotificationMapper.status", user_id);
+	public User status(String user_id) {
+		User loginVO = mybatis.selectOne("NotificationMapper.status", user_id);
 		if(loginVO != null) {
 			logger.info("DAO status... " + loginVO.getEmail_yn());
 			logger.info("DAO status... " + loginVO.getSms_yn());
@@ -379,8 +380,8 @@ public class NotificationDAO {
 		return loginVO;
 	}
 	
-	public NotificationVO status2(String device_id) {
-		NotificationVO notificationVO = mybatis.selectOne("NotificationMapper.status2", device_id);
+	public Notification status2(String device_id) {
+		Notification notificationVO = mybatis.selectOne("NotificationMapper.status2", device_id);
 		if(notificationVO != null) {
 			logger.info("DAO status... " + notificationVO.getPush1());
 //			logger.info("DAO status... " + notificationVO.getPush_token());
@@ -441,7 +442,7 @@ public class NotificationDAO {
 		int push1 = (Integer)requestMap.get("push1");
 		
 		
-		NotificationVO notificationVO = mybatis.selectOne("NotificationMapper.userDevice", device_id);
+		Notification notificationVO = mybatis.selectOne("NotificationMapper.userDevice", device_id);
 		if(notificationVO == null) {
 			logger.info("DB INSERT ["+device_id+"] --> token["+push_token+"]");
 			int result = mybatis.insert("NotificationMapper.userDeviceInsert", requestMap);

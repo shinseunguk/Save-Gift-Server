@@ -1,6 +1,6 @@
-package com.savegift.login;
+package com.savegift.domain;
 
-public class LoginVO {
+public class User {
 	private String user_id;
 	private String user_password;
 	private String name;

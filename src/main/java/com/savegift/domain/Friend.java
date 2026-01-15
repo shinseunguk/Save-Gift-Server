@@ -1,6 +1,6 @@
-package com.savegift.login;
+package com.savegift.domain;
 
-public class FriendVO {
+public class Friend {
 	String user_id;
 	String name;
 	String friend;

@@ -1,6 +1,6 @@
-package com.savegift.notification;
+package com.savegift.domain;
 
-public class UserDeviceVO {
+public class UserDevice {
 	private String user_id;
 	private String device_id;
 	private String device_model;

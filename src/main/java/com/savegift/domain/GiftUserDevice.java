@@ -1,8 +1,8 @@
-package com.savegift.giftcon;
+package com.savegift.domain;
 
 import java.sql.Date;
 
-public class GiftVO {
+public class GiftUserDevice {
 	private int seq;
 	private String user_id;
 	private String img_url;
@@ -18,7 +18,12 @@ public class GiftVO {
 	private String present_id;
 	private String present_message;
 	private int present_check;
-	
+	private String device_model;
+	private String push_token;
+	private int push_yn;
+	private int push30;
+	private int push7;
+	private int push1;
 	public int getSeq() {
 		return seq;
 	}
@@ -109,5 +114,42 @@ public class GiftVO {
 	public void setPresent_check(int present_check) {
 		this.present_check = present_check;
 	}
+	public String getDevice_model() {
+		return device_model;
+	}
+	public void setDevice_model(String device_model) {
+		this.device_model = device_model;
+	}
+	public String getPush_token() {
+		return push_token;
+	}
+	public void setPush_token(String push_token) {
+		this.push_token = push_token;
+	}
+	public int getPush_yn() {
+		return push_yn;
+	}
+	public void setPush_yn(int push_yn) {
+		this.push_yn = push_yn;
+	}
+	public int getPush30() {
+		return push30;
+	}
+	public void setPush30(int push30) {
+		this.push30 = push30;
+	}
+	public int getPush7() {
+		return push7;
+	}
+	public void setPush7(int push7) {
+		this.push7 = push7;
+	}
+	public int getPush1() {
+		return push1;
+	}
+	public void setPush1(int push1) {
+		this.push1 = push1;
+	}
+	
 	
 }

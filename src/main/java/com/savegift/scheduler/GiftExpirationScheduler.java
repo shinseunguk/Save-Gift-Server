@@ -1,4 +1,4 @@
-package pms.scheduler;
+package com.savegift.scheduler;
 
 import java.util.Locale;
 
@@ -8,20 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.savegift.giftcon.GiftController;
-import com.savegift.giftcon.GiftDAO;
+import com.savegift.repository.GiftRepository;
 
 @Component
-public class Scheduler {
-	
-	private static final Logger logger = LoggerFactory.getLogger(Scheduler.class);
-	
+public class GiftExpirationScheduler {
+
+	private static final Logger logger = LoggerFactory.getLogger(GiftExpirationScheduler.class);
+
 	@Autowired
-	GiftDAO giftDAO;
-	
+	GiftRepository giftRepository;
+
 	@Scheduled(cron = "10 0 0 * * *")
 	public void autoUseYnUpdate() {
-		boolean result = giftDAO.autoUseYnUpdate();
+		boolean result = giftRepository.autoUseYnUpdate();
 		
 		if(result) {
 			logger.info("스케줄러 실행");

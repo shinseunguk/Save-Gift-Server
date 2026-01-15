@@ -1,6 +1,6 @@
-package spring.service;
+package com.savegift.dto;
 
-public class EmailVO {
+public class EmailDto {
 	private String user_id;
 	private String cert_number;
 	

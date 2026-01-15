@@ -12,14 +12,14 @@
 		VALUES(#{user_id}, #{img_url}, #{brand}, #{barcode_number}, #{expiration_period}, #{registration_date}, #{use_yn}, #{device_id}, #{registrant}, #{product_name}, #{img_local_url}, NULL, NULL, 0)
 	</insert>
 	
-	<select id="overlapPhoto" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="overlapPhoto" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE (img_local_url = #{img_local_url} OR barcode_number = #{barcode_number})
 		AND device_id = #{device_id}
 	</select>
 	
-	<select id="giftSaveUsedLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUsedLogin1" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 1
@@ -28,7 +28,7 @@
 		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftSaveUsedLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUsedLogin2" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 1
@@ -37,7 +37,7 @@
 		ORDER BY expiration_period ASC
 	</select>
 	
-	<select id="giftSaveUsedLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUsedLogin3" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 1
@@ -46,7 +46,7 @@
 		ORDER BY product_name ASC
 	</select>
 	
-	<select id="giftSaveUsedLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUsedLogin4" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 1
@@ -55,7 +55,7 @@
 		ORDER BY brand ASC
 	</select>
 	
-	<select id="giftSaveUnUsedLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUnUsedLogin1" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 0
@@ -64,7 +64,7 @@
 		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftSaveUnUsedLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUnUsedLogin2" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 0
@@ -73,7 +73,7 @@
 		ORDER BY expiration_period ASC
 	</select>
 	
-	<select id="giftSaveUnUsedLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUnUsedLogin3" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 0
@@ -82,7 +82,7 @@
 		ORDER BY product_name ASC
 	</select>
 	
-	<select id="giftSaveUnUsedLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUnUsedLogin4" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 0
@@ -91,7 +91,7 @@
 		ORDER BY brand ASC
 	</select>
 	
-	<select id="giftSaveAllLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveAllLogin1" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE (user_id = #{user_id} OR device_id = #{device_id})
@@ -99,7 +99,7 @@
 		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftSaveAllLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveAllLogin2" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE (user_id = #{user_id} OR device_id = #{device_id})
@@ -107,7 +107,7 @@
 		ORDER BY expiration_period ASC
 	</select>
 	
-	<select id="giftSaveAllLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveAllLogin3" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE (user_id = #{user_id} OR device_id = #{device_id})
@@ -115,7 +115,7 @@
 		ORDER BY product_name ASC
 	</select>
 	
-	<select id="giftSaveAllLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveAllLogin4" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE (user_id = #{user_id} OR device_id = #{device_id})
@@ -123,7 +123,7 @@
 		ORDER BY brand ASC
 	</select>
 	
-	<select id="giftSaveUsedBLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUsedBLogin1" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 1
@@ -132,7 +132,7 @@
 		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftSaveUsedBLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUsedBLogin2" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 1
@@ -141,7 +141,7 @@
 		ORDER BY expiration_period ASC
 	</select>
 	
-	<select id="giftSaveUsedBLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUsedBLogin3" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 1
@@ -150,7 +150,7 @@
 		ORDER BY product_name ASC
 	</select>
 	
-	<select id="giftSaveUsedBLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUsedBLogin4" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 1
@@ -159,7 +159,7 @@
 		ORDER BY brand ASC
 	</select>
 	
-	<select id="giftSaveUnUsedBLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUnUsedBLogin1" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 0
@@ -168,7 +168,7 @@
 		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftSaveUnUsedBLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUnUsedBLogin2" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 0
@@ -177,7 +177,7 @@
 		ORDER BY expiration_period ASC
 	</select>
 	
-	<select id="giftSaveUnUsedBLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUnUsedBLogin3" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 0
@@ -186,7 +186,7 @@
 		ORDER BY product_name ASC
 	</select>
 	
-	<select id="giftSaveUnUsedBLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveUnUsedBLogin4" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE use_yn = 0
@@ -195,7 +195,7 @@
 		ORDER BY brand ASC
 	</select>
 	
-	<select id="giftSaveAllBLogin1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveAllBLogin1" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE device_id = #{device_id}
@@ -203,7 +203,7 @@
 		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftSaveAllBLogin2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveAllBLogin2" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE device_id = #{device_id}
@@ -211,7 +211,7 @@
 		ORDER BY expiration_period ASC
 	</select>
 	
-	<select id="giftSaveAllBLogin3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveAllBLogin3" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE device_id = #{device_id}
@@ -219,7 +219,7 @@
 		ORDER BY product_name ASC
 	</select>
 	
-	<select id="giftSaveAllBLogin4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftSaveAllBLogin4" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE device_id = #{device_id}
@@ -228,7 +228,7 @@
 	</select>
 	
 	<!-- 선물함 -->
-	<select id="myPresent1NotUse" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent1NotUse" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
@@ -236,7 +236,7 @@
 		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="myPresent2NotUse" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent2NotUse" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
@@ -244,7 +244,7 @@
 		ORDER BY expiration_period ASC
 	</select>
 	
-	<select id="myPresent3NotUse" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent3NotUse" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
@@ -252,7 +252,7 @@
 		ORDER BY product_name ASC
 	</select>
 	
-	<select id="myPresent4NotUse" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent4NotUse" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
@@ -262,7 +262,7 @@
 	<!-- 선물함 -->
 	
 	<!-- 선물함 사용 -->
-	<select id="myPresent1Use" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent1Use" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
@@ -270,7 +270,7 @@
 		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="myPresent2Use" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent2Use" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
@@ -278,7 +278,7 @@
 		ORDER BY expiration_period ASC
 	</select>
 	
-	<select id="myPresent3Use" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent3Use" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
@@ -286,7 +286,7 @@
 		ORDER BY product_name ASC
 	</select>
 	
-	<select id="myPresent4Use" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="myPresent4Use" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE present_id = #{user_id}
@@ -296,7 +296,7 @@
 	<!-- 선물함 사용 -->
 	
 	<!-- 내가 준 선물 -->
-	<select id="giftPresent1" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftPresent1" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE user_id = #{user_id}
@@ -304,7 +304,7 @@
 		ORDER BY registration_date DESC
 	</select>
 	
-	<select id="giftPresent2" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftPresent2" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE user_id = #{user_id}
@@ -312,7 +312,7 @@
 		ORDER BY expiration_period ASC
 	</select>
 	
-	<select id="giftPresent3" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftPresent3" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE user_id = #{user_id}
@@ -320,7 +320,7 @@
 		ORDER BY product_name ASC
 	</select>
 	
-	<select id="giftPresent4" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftPresent4" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE user_id = #{user_id}
@@ -330,14 +330,14 @@
 	<!-- 내가 준 선물 -->
 	
 	<!-- Gift Detail  -->
-	<select id="giftDetail" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftDetail" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		SELECT * FROM
 		GIFTCON
 		WHERE seq = #{seq}
 	</select>
 	
 	<!-- Gift Detail  -->
-	<select id="giftDelete" resultType="com.savegift.giftcon.GiftVO" parameterType="hashMap">
+	<select id="giftDelete" resultType="com.savegift.domain.Gift" parameterType="hashMap">
 		DELETE 
 		FROM GIFTCON
 		WHERE
@@ -395,7 +395,7 @@
 		WHERE seq = #{seq}
 	</update>	
 	
-	<select id="periodSelect" parameterType="String" resultType="com.savegift.giftcon.GiftUserDeviceVO">
+	<select id="periodSelect" parameterType="String" resultType="com.savegift.domain.GiftUserDevice">
 		select * 
 		FROM GIFTCON g, USER_DEVICE ud
 		WHERE (expiration_period &lt; #{mDate} AND expiration_period >= CURDATE())

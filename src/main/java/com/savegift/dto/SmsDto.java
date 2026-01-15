@@ -1,8 +1,8 @@
-package spring.service;
+package com.savegift.dto;
 
 import java.sql.Date;
 
-public class SmsVO {
+public class SmsDto {
 
 	private String phone_number;
 	private String cert_number;

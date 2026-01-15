@@ -1,4 +1,4 @@
-package com.savegift.notification;
+package com.savegift.controller;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -41,11 +41,12 @@ import org.springframework.web.client.RestTemplate;
 
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.savegift.giftcon.GiftService;
-import com.savegift.giftcon.GiftUserDeviceVO;
-import com.savegift.giftcon.GiftVO;
-import com.savegift.login.LoginDAO;
-import com.savegift.login.LoginVO; 
+import com.savegift.service.GiftService;
+import com.savegift.service.NotificationService;
+import com.savegift.domain.GiftUserDevice;
+import com.savegift.domain.Gift;
+import com.savegift.domain.Notification;
+import com.savegift.domain.User; 
 
 
 @Controller
@@ -62,24 +63,24 @@ public class NotificationController {
 	
 	@RequestMapping(value = "/status", method = RequestMethod.GET)
 	@ResponseBody
-	public LoginVO status(HttpServletRequest request){
+	public User status(HttpServletRequest request){
 		logger.info("notification/status..");
 		String user_id = request.getParameter("user_id");
 		logger.info("userid... " + user_id);
 		
-		LoginVO loginvo = notificationService.status(user_id);
+		User loginvo = notificationService.status(user_id);
 		
 		return loginvo;
 	}
 	
 	@RequestMapping(value = "/status2", method = RequestMethod.GET)
 	@ResponseBody
-	public NotificationVO status2(HttpServletRequest request){
+	public Notification status2(HttpServletRequest request){
 		logger.info("notification/status..");
 		String device_id = request.getParameter("device_id");
 		logger.info("device_id... " + device_id);
 		
-		NotificationVO notificationVO = notificationService.status2(device_id);
+		Notification notificationVO = notificationService.status2(device_id);
 		
 		return notificationVO;
 	}
@@ -137,13 +138,13 @@ public class NotificationController {
 	
 //	@RequestMapping(value = "/push/list", method = RequestMethod.GET)
 //	@ResponseBody
-//	public List<GiftUserDeviceVO> getPushList(){
+//	public List<GiftUserDevice> getPushList(){
 //		Date date = new Date();
-//		List<GiftUserDeviceVO> list = new ArrayList<GiftUserDeviceVO>();
-//		List<GiftUserDeviceVO> list30 = new ArrayList<GiftUserDeviceVO>();
-//		List<GiftUserDeviceVO> list7 = new ArrayList<GiftUserDeviceVO>();
-//		List<GiftUserDeviceVO> list1 = new ArrayList<GiftUserDeviceVO>();
-//		List<GiftUserDeviceVO> resultList = new ArrayList<GiftUserDeviceVO>();
+//		List<GiftUserDevice> list = new ArrayList<GiftUserDevice>();
+//		List<GiftUserDevice> list30 = new ArrayList<GiftUserDevice>();
+//		List<GiftUserDevice> list7 = new ArrayList<GiftUserDevice>();
+//		List<GiftUserDevice> list1 = new ArrayList<GiftUserDevice>();
+//		List<GiftUserDevice> resultList = new ArrayList<GiftUserDevice>();
 //		
 //		Date[] arr30 = null;
 //		Date[] arr7 = null;

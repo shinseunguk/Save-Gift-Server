@@ -18,20 +18,20 @@
 		VALUES(#{user_id},#{name},#{phone_number},0, 1, 1, NOW(), #{social_login}, #{social_token})
 	</insert>
 	
-	<select id="duplicationid" resultType="com.savegift.login.LoginVO">
+	<select id="duplicationid" resultType="com.savegift.domain.User">
 		SELECT * FROM
 		USER
 		WHERE user_id = #{user_id}
 	</select>
 	
-	<select id="checkSocialId" resultType="com.savegift.login.LoginVO">
+	<select id="checkSocialId" resultType="com.savegift.domain.User">
 		SELECT * FROM
 		USER
 		WHERE user_id = #{user_id}
 		AND user_password is null
 	</select>
 	
-	<select id="login" resultType="com.savegift.login.LoginVO">
+	<select id="login" resultType="com.savegift.domain.User">
 		SELECT * FROM
 		USER
 		WHERE user_id = #{user_id}
@@ -44,25 +44,25 @@
 		WHERE user_id = #{user_id} 	
 	</select>
 	
-	<select id="findemail" resultType="com.savegift.login.LoginVO">
+	<select id="findemail" resultType="com.savegift.domain.User">
 		SELECT * FROM
 		USER
 		WHERE user_id = #{user_id}
 	</select>
 	
-	<select id="findphone" resultType="com.savegift.login.LoginVO">
+	<select id="findphone" resultType="com.savegift.domain.User">
 		SELECT * FROM
 		USER
 		WHERE phone_number = #{phone_number}
 	</select>
 	
-	<select id="addFriend" resultType="com.savegift.login.FriendVO" parameterType="String">
+	<select id="addFriend" resultType="com.savegift.domain.Friend" parameterType="String">
 		SELECT * FROM
 		FRIEND
 		WHERE user_id = #{user_id}
 	</select>
 	
-	<select id="FriendMySelect" resultType="com.savegift.login.FriendVO" parameterType="String">
+	<select id="FriendMySelect" resultType="com.savegift.domain.Friend" parameterType="String">
 		SELECT * FROM
 		FRIEND
 		WHERE (
@@ -72,19 +72,19 @@
 		)
 	</select>
 	
-	<select id="addFriendOpponent" resultType="com.savegift.login.FriendVO" parameterType="String">
+	<select id="addFriendOpponent" resultType="com.savegift.domain.Friend" parameterType="String">
 		SELECT * FROM
 		FRIEND
 		WHERE user_id = #{friendOrigin}
 	</select>
 	
-	<select id="getRequestFriend" resultType="com.savegift.login.FriendVO" parameterType="String">
+	<select id="getRequestFriend" resultType="com.savegift.domain.Friend" parameterType="String">
 		SELECT * FROM
 		FRIEND_WAIT
 		WHERE user_id = #{user_id}
 	</select>
 	
-	<select id="getRequestedFriend" resultType="com.savegift.login.FriendVO" parameterType="String">
+	<select id="getRequestedFriend" resultType="com.savegift.domain.Friend" parameterType="String">
 		SELECT * FROM
 		FRIEND_WAIT
 		WHERE friend = #{user_id}
@@ -101,14 +101,14 @@
 		WHERE user_id = #{user_id}
 	</update>
 	
-	<select id="addFriendWait" resultType="com.savegift.login.FriendVO" parameterType="String">
+	<select id="addFriendWait" resultType="com.savegift.domain.Friend" parameterType="String">
 		SELECT * FROM
 		FRIEND_WAIT
 		WHERE user_id = #{user_id}
 		AND friend = #{friend}
 	</select>
 	
-	<select id="addFriendWait2" resultType="com.savegift.login.FriendVO" parameterType="String">
+	<select id="addFriendWait2" resultType="com.savegift.domain.Friend" parameterType="String">
 		SELECT * FROM
 		FRIEND_WAIT
 		WHERE user_id = #{friend}
@@ -176,7 +176,7 @@
 		WHERE user_id = #{user_id}
 	</delete>
 	
-	<select id="userInfo" resultType="com.savegift.login.LoginVO">
+	<select id="userInfo" resultType="com.savegift.domain.User">
 		SELECT name, create_date FROM USER
 		WHERE 
 		user_id = #{user_id}
@@ -194,7 +194,7 @@
 	 	WHERE user_id = #{user_id} 
 	</update>
 	
-	<select id="smsSelect" parameterType="hashMap" resultType="spring.service.SmsVO">
+	<select id="smsSelect" parameterType="hashMap" resultType="com.savegift.dto.SmsDto">
 		SELECT * FROM AUTH_SMS
 		WHERE phone_number = #{phone_number}
 		AND cert_date = DATE_FORMAT(now(), '%Y-%m-%d') 
@@ -213,20 +213,20 @@
 	 	AND phone_number = #{phone_number}
 	</update>
 	
-	<select id="smsCheck" parameterType="HashMap" resultType="spring.service.SmsVO">
+	<select id="smsCheck" parameterType="HashMap" resultType="com.savegift.dto.SmsDto">
 		SELECT * FROM AUTH_SMS
 		WHERE phone_number = #{phone_number} 
 		AND cert_date = DATE_FORMAT(now(), '%Y-%m-%d')
 		AND cert_number = #{cert_number}
 	</select>
 	
-	<select id="checkEmailInfo" parameterType="HashMap" resultType="com.savegift.login.LoginVO">
+	<select id="checkEmailInfo" parameterType="HashMap" resultType="com.savegift.domain.User">
 		SELECT * FROM USER
 		WHERE name = #{name}
 		AND user_id = #{user_id}
 	</select>
 	
-	<select id="emailCheckSelect" parameterType="HashMap" resultType="spring.service.EmailVO">
+	<select id="emailCheckSelect" parameterType="HashMap" resultType="com.savegift.dto.EmailDto">
 		SELECT * FROM AUTH_EMAIL
 		WHERE user_id = #{user_id}
 	</select>
@@ -242,13 +242,13 @@
 		VALUES (#{user_id}, #{cert_number})
 	</insert>
 	
-	<select id="checkEmail" parameterType="HashMap" resultType="spring.service.EmailVO">
+	<select id="checkEmail" parameterType="HashMap" resultType="com.savegift.dto.EmailDto">
 		SELECT * FROM AUTH_EMAIL
 		WHERE user_id = #{user_id}
 		AND cert_number = #{cert_number}
 	</select>
 	
-	<select id="checkNamePhone" parameterType="HashMap" resultType="com.savegift.login.LoginVO">
+	<select id="checkNamePhone" parameterType="HashMap" resultType="com.savegift.domain.User">
 		SELECT * FROM USER
 		WHERE name = #{name}
 		AND phone_number = #{phone_number}

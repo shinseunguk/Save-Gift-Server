@@ -1,9 +1,9 @@
-package com.savegift.login;
+package com.savegift.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class SHA256 {
+public class SHA256Util {
 
     public String encrypt(String text) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");

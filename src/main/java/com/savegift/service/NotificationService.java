@@ -1,4 +1,4 @@
-package com.savegift.notification;
+package com.savegift.service;
 
 
 import java.text.DateFormat;
@@ -13,39 +13,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.savegift.giftcon.GiftService;
-import com.savegift.giftcon.GiftUserDeviceVO;
-import com.savegift.login.LoginVO;
+import com.savegift.repository.NotificationRepository;
+import com.savegift.domain.GiftUserDevice;
+import com.savegift.domain.Notification;
+import com.savegift.domain.User;
 
 @Service
 public class NotificationService {
 	
 	@Autowired
-	NotificationDAO notificationDAO;
+	NotificationRepository notificationRepository;
 	
 	@Autowired
 	GiftService giftService;
 
-	public LoginVO status(String user_id){
-		return notificationDAO.status(user_id);
+	public User status(String user_id){
+		return notificationRepository.status(user_id);
 	}
-	public NotificationVO status2(String device_id){
-		return notificationDAO.status2(device_id);
+	public Notification status2(String device_id){
+		return notificationRepository.status2(device_id);
 	}
 	public boolean notiSetting(HashMap<String, Object> requestMap){
-		return notificationDAO.notiSetting(requestMap);
+		return notificationRepository.notiSetting(requestMap);
 	}
 	public String version() {
-		return notificationDAO.version();
+		return notificationRepository.version();
 	}
 	public boolean deviceInsert(HashMap<String, Object> requestMap){
-		return notificationDAO.deviceInsert(requestMap);
+		return notificationRepository.deviceInsert(requestMap);
 	}
 	public boolean sendPush(){
-		return notificationDAO.sendPush();
+		return notificationRepository.sendPush();
 	}
 	public boolean friendRequestPush(HashMap<String, Object> requestMap){
-		return notificationDAO.friendRequestPush(requestMap);
+		return notificationRepository.friendRequestPush(requestMap);
 	}
 	
 }

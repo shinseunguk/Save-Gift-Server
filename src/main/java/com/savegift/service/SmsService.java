@@ -1,4 +1,4 @@
-package spring.service;
+package com.savegift.service;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.savegift.login.LoginDAO;
+import com.savegift.repository.UserRepository;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -19,8 +19,8 @@ public class SmsService {
 	private static final Logger logger = LoggerFactory.getLogger(SmsService.class);
 	
 	@Autowired
-	LoginDAO loginDAO;
-	
+	UserRepository userRepository;
+
 	public String certifiedPhoneNumber(String phoneNumber, String cerNum, String device_id) {
         // 4 params(to, from, type, text) are mandatory. must be filled
         HashMap<String, String> params = new HashMap<String, String>();
@@ -30,11 +30,11 @@ public class SmsService {
         params.put("text", "[기프티콘 저장소] 기프티콘 저장소 회원 인증번호는 "+cerNum+" 입니다");
         params.put("app_version", "기프티콘 저장소 ver 1.0.0"); // application name and version
 
-        return loginDAO.sendSMS(phoneNumber, cerNum, device_id, params);
+        return userRepository.sendSMS(phoneNumber, cerNum, device_id, params);
     }
-	
+
 	public boolean smsCheck(HashMap<String,Object> requestMap) {
-        return loginDAO.smsCheck(requestMap);
+        return userRepository.smsCheck(requestMap);
     }
 	
 }
