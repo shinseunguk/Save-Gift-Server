@@ -13,15 +13,57 @@
 
 ## 프로젝트 구조
 
+계층형 아키텍처(Layered Architecture) 패턴을 적용하여 구성되어 있습니다.
+
 ```
-src/main/java
-├── com/savegift
-│   ├── login/          # 회원 및 친구 관리
-│   ├── giftcon/        # 기프티콘 관리
-│   └── notification/   # 알림 설정
-├── spring/service/     # 이메일, SMS 서비스
-└── pms/scheduler/      # 스케줄러
+src/main/java/com/savegift
+├── controller/     # 프레젠테이션 계층 - HTTP 요청/응답 처리
+│   ├── UserController.java
+│   ├── GiftController.java
+│   ├── NotificationController.java
+│   ├── EmailController.java
+│   └── SmsController.java
+│
+├── service/        # 비즈니스 계층 - 비즈니스 로직 처리
+│   ├── UserService.java
+│   ├── GiftService.java
+│   ├── NotificationService.java
+│   ├── MailService.java
+│   └── SmsService.java
+│
+├── repository/     # 영속성 계층 - 데이터 접근 처리
+│   ├── UserRepository.java
+│   ├── GiftRepository.java
+│   └── NotificationRepository.java
+│
+├── domain/         # 도메인 모델 - 엔티티 클래스
+│   ├── User.java
+│   ├── Friend.java
+│   ├── Gift.java
+│   ├── GiftUserDevice.java
+│   ├── Notification.java
+│   └── UserDevice.java
+│
+├── dto/            # 데이터 전송 객체
+│   ├── EmailDto.java
+│   └── SmsDto.java
+│
+├── scheduler/      # 스케줄러
+│   └── GiftExpirationScheduler.java
+│
+└── util/           # 유틸리티
+    └── SHA256Util.java
 ```
+
+### 계층 설명
+
+| 계층 | 역할 |
+|------|------|
+| Controller | 클라이언트 요청을 받아 Service 계층으로 전달하고 응답 반환 |
+| Service | 비즈니스 로직을 처리하고 트랜잭션 관리 |
+| Repository | MyBatis를 통한 데이터베이스 CRUD 작업 수행 |
+| Domain | 데이터베이스 테이블과 매핑되는 엔티티 클래스 |
+| DTO | 계층 간 데이터 전송을 위한 객체 |
 
 ## 주요 기능
 
