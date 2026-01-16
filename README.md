@@ -4,12 +4,14 @@
 
 ## 기술 스택
 
-- **Framework**: Spring MVC 3.1.1
+- **Framework**: Spring MVC 4.3.30
 - **ORM**: MyBatis 3.5.7
-- **Database**: MySQL 8.0.25
+- **Database**: MySQL 8.0
 - **Security**: Spring Security 4.1.0
 - **Build**: Maven
 - **Push**: FCM (Firebase Cloud Messaging)
+- **Container**: Docker + Tomcat 9
+- **Java**: JDK 1.8
 
 ## 프로젝트 구조
 
@@ -147,21 +149,87 @@ src/main/java/com/savegift
 ## 실행 방법
 
 ### 요구사항
-- JDK 1.6+
-- Maven
-- MySQL
+- JDK 1.8+
+- Maven 3.x
+- Docker & Docker Compose
+- MySQL 8.0 (Docker 사용 시 자동 설정)
 
-### 설정
-1. `src/main/resources/datasource.properties` 파일에 DB 접속 정보 설정
-2. `src/main/webapp/WEB-INF/spring/datasource.properties` 파일에 DB 접속 정보 설정
+### 환경 설정
 
-### 빌드 및 실행
+`src/main/resources/datasource.properties` 파일에서 설정:
+
+```properties
+# DB 설정
+jdbc.driverClassName=com.mysql.cj.jdbc.Driver
+jdbc.url=jdbc:mysql://db:3306/save_gift?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+jdbc.username=root
+jdbc.password=root12345
+
+# 메일 설정
+mail.host=smtp.gmail.com
+mail.port=587
+mail.username=your-email@gmail.com
+mail.password=your-app-password
+
+# FCM 설정
+fcm.keyValue=YOUR_FCM_KEY_HERE
+
+# SMS API 설정 (CoolSMS)
+sms.api.key=YOUR_SMS_API_KEY
+sms.api.secret=YOUR_SMS_API_SECRET
+```
+
+### Docker로 실행 (권장)
+
+```bash
+# 빌드 및 실행
+docker-compose up --build
+
+# 백그라운드 실행
+docker-compose up -d --build
+
+# 로그 확인
+docker-compose logs -f
+
+# 앱 로그만 확인
+docker-compose logs -f app
+
+# 컨테이너 상태 확인
+docker-compose ps
+
+# 중지
+docker-compose down
+
+# 볼륨 포함 완전 삭제
+docker-compose down -v
+```
+
+실행 후 `http://localhost:8080`으로 접속
+
+### 로컬 Tomcat으로 실행
+
 ```bash
 # 빌드
 mvn clean package
 
-# 실행 (Tomcat 등 WAS에 배포)
+# target/ios-1.0.0-BUILD-SNAPSHOT.war 파일을 Tomcat webapps에 배포
 ```
+
+> 로컬 실행 시 `datasource.properties`의 DB URL을 `localhost`로 변경 필요
+
+## 주요 의존성
+
+| 라이브러리 | 버전 | 용도 |
+|-----------|------|------|
+| Spring MVC | 4.3.30 | 웹 프레임워크 |
+| Spring Security | 4.1.0 | 보안 |
+| MyBatis | 3.5.7 | ORM |
+| MySQL Connector | 8.0.25 | DB 드라이버 |
+| Jackson | 2.9.6 | JSON 처리 |
+| Lombok | 1.18.30 | 보일러플레이트 코드 제거 |
+| Google API Client | 1.32.1 | FCM 연동 |
+| JavaMail | 1.4.7 | 이메일 발송 |
+| CoolSMS SDK | 2.2 | SMS 발송 |
 
 ## 라이선스
 
