@@ -2,24 +2,25 @@ package com.savegift.service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.savegift.repository.UserRepository;
+import com.savegift.domain.User;
+import com.savegift.domain.Friend;
 
 @Service("UserService")
+@Transactional
 public class UserService {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-	
+
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	
 	//회원가입 
 	public int register(HashMap<String, Object> requestMap) {

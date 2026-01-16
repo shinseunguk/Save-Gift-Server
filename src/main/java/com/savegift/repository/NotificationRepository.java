@@ -93,12 +93,12 @@ public class NotificationRepository {
 				DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 				registerIdsArr = new String[resultList.size()];
 			
-				registerIdsArr[i] = resultList.get(i).getPush_token();
+				registerIdsArr[i] = resultList.get(i).getPushToken();
 				
 				String brand = resultList.get(i).getBrand();
-				String productName = resultList.get(i).getProduct_name();
+				String productName = resultList.get(i).getProductName();
 				
-				String a_date = format.format(resultList.get(i).getExpiration_period());
+				String a_date = format.format(resultList.get(i).getExpirationPeriod());
 				String b_date = format.format(getToday.getTime());
 				
 				Date a_parseDate = format.parse(a_date);
@@ -226,7 +226,7 @@ public class NotificationRepository {
 //				body = user_id+"님이 친구를 요청했습니다.\n앱내 친구TAB에서 확인해주세요.";
 				
 				//단건의 경우 to, 다건인 경우 registration_ids		
-				json.put("to", list.get(i).getPush_token());
+				json.put("to", list.get(i).getPushToken());
 				JSONObject info = new JSONObject();
 				info.put("title", "기프티콘 수첩");
 				info.put("body", body);
@@ -333,7 +333,7 @@ public class NotificationRepository {
 		if(list30.size() != 0) {
 			arr30 = new Date[list30.size()];
 			for(int i = 0 ; i < list30.size(); i++) {
-				arr30[i] = list30.get(i).getExpiration_period();
+				arr30[i] = list30.get(i).getExpirationPeriod();
 				if(arr30[i].equals(mDate1)) {
 					resultList.add(list30.get(i));
 				}else if(arr30[i].before(mDate1)) {
@@ -345,7 +345,7 @@ public class NotificationRepository {
 		if(list7.size() != 0) {
 			arr7 = new Date[list7.size()];
 			for(int i = 0 ; i < list7.size(); i++) {
-				arr7[i] = list7.get(i).getExpiration_period();
+				arr7[i] = list7.get(i).getExpirationPeriod();
 				if(arr7[i].equals(mDate2)) {
 					resultList.add(list7.get(i));
 				}else if(arr7[i].before(mDate2)) {
@@ -357,7 +357,7 @@ public class NotificationRepository {
 		if(list1.size() != 0) {
 			arr1 = new Date[list1.size()];
 			for(int i = 0 ; i < list1.size(); i++) {
-				arr1[i] = list1.get(i).getExpiration_period();
+				arr1[i] = list1.get(i).getExpirationPeriod();
 				if(arr1[i].equals(mDate3)) {
 					resultList.add(list1.get(i));
 				}else if(arr1[i].before(mDate3)) {
@@ -372,8 +372,8 @@ public class NotificationRepository {
 	public User status(String user_id) {
 		User loginVO = mybatis.selectOne("NotificationMapper.status", user_id);
 		if(loginVO != null) {
-			logger.info("DAO status... " + loginVO.getEmail_yn());
-			logger.info("DAO status... " + loginVO.getSms_yn());
+			logger.info("DAO status... " + loginVO.getEmailYn());
+			logger.info("DAO status... " + loginVO.getSmsYn());
 			logger.info("DAO status... " + loginVO.getName());
 		}
 		
@@ -384,7 +384,7 @@ public class NotificationRepository {
 		Notification notificationVO = mybatis.selectOne("NotificationMapper.status2", device_id);
 		if(notificationVO != null) {
 			logger.info("DAO status... " + notificationVO.getPush1());
-//			logger.info("DAO status... " + notificationVO.getPush_token());
+//			logger.info("DAO status... " + notificationVO.getPushToken());
 		}
 		
 		return notificationVO;

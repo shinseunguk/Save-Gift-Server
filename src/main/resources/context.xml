@@ -43,6 +43,19 @@
      <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
      	<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
      </bean>
-     
+
+     <!-- Mail Sender -->
+     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+         <property name="host" value="${mail.host}" />
+         <property name="port" value="${mail.port}" />
+         <property name="username" value="${mail.username}" />
+         <property name="password" value="${mail.password}" />
+         <property name="javaMailProperties">
+             <props>
+                 <prop key="mail.smtp.auth">true</prop>
+                 <prop key="mail.smtp.starttls.enable">true</prop>
+             </props>
+         </property>
+     </bean>
 
 </beans>

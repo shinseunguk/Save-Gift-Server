@@ -26,8 +26,14 @@
 	<context:component-scan base-package="com.savegift.service" />
 	<context:component-scan base-package="com.savegift.repository" />
 	<context:component-scan base-package="com.savegift.scheduler" />
+	<context:component-scan base-package="com.savegift.util" />
 
 	<!-- Enable scheduled tasks -->
 	<task:annotation-driven />
+
+	<!-- Property placeholder configuration -->
+	<beans:bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<beans:property name="location" value="classpath:datasource.properties" />
+	</beans:bean>
 
 </beans:beans>

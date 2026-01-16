@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.savegift.repository.NotificationRepository;
 import com.savegift.domain.GiftUserDevice;
@@ -19,6 +19,7 @@ import com.savegift.domain.Notification;
 import com.savegift.domain.User;
 
 @Service
+@Transactional
 public class NotificationService {
 	
 	@Autowired

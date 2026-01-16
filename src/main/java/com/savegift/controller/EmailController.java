@@ -1,10 +1,7 @@
 package com.savegift.controller;
 
 import java.util.HashMap;
-import java.util.Properties;
 import java.util.Random;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.savegift.service.UserService;
 import com.savegift.service.MailService;
+import com.savegift.service.UserService;
 
 @Controller
 public class EmailController {
@@ -28,13 +24,8 @@ public class EmailController {
 	
 	@Autowired
 	private UserService userService;
-	
-	Properties props = new Properties();
 
-	//DB작업이 필요한 만큼 DAO들 선언해야함
-	
-	//아이디와 이메일이 같으면 특정한 메일이 가게..
-	@RequestMapping(value = "/noticeMail", method = RequestMethod.POST , produces = "application/json")
+	@RequestMapping(value = "/noticeMail", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public boolean sendEmail(@RequestBody HashMap<String, Object> requestMap) throws Exception {
 		boolean result = false;
@@ -51,10 +42,8 @@ public class EmailController {
 		result = userService.checkEmailInfo(requestMap);
 		
 		if(result) {
+			logger.info(email + "님에게 메일 전송 시도.. ");
 
-			logger.info(email+"님에게 메일 전송 시도.. ");
-//			ModelAndView mv = new ModelAndView();
-			
 			String addr = "krdut1@gmail.com";
 			
 			String subject = "[기프티콘 저장소] 이메일 인증을 위한 인증번호가 발급되었습니다.";

@@ -9,6 +9,8 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
 import com.savegift.domain.Friend;
@@ -22,12 +24,19 @@ import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Repository
+@PropertySource("classpath:datasource.properties")
 public class UserRepository {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
 
 	@Autowired
     SqlSession mybatis;
+
+	@Value("${sms.api.key}")
+	private String smsApiKey;
+
+	@Value("${sms.api.secret}")
+	private String smsApiSecret;
 
 	public int register(HashMap<String, Object> requestMap) {
 		int result = mybatis.insert("LoginMapper.register", requestMap);
@@ -113,8 +122,8 @@ public class UserRepository {
 
 		if(user != null) {
 			// 아이디는 있음
-			logger.info("findEmail ... " + user.getUser_id());
-			logger.info("findEmail ... " + user.getPhone_number());
+			logger.info("findEmail ... " + user.getUserId());
+			logger.info("findEmail ... " + user.getPhoneNumber());
 		}
 
 		return user;
@@ -126,8 +135,8 @@ public class UserRepository {
 
 		if(user != null) {
 			// 아이디는 있음
-			logger.info("findPhone ... " + user.getUser_id());
-			logger.info("findPhone ... " + user.getPhone_number());
+			logger.info("findPhone ... " + user.getUserId());
+			logger.info("findPhone ... " + user.getPhoneNumber());
 		}
 
 		return user;
@@ -351,7 +360,7 @@ public class UserRepository {
 
 		if(list != null) {
 			for(int i = 0 ; i < list.size() ; i++) {
-				logger.info("getUser_id " + list.get(i).getUser_id());
+				logger.info("getUser_id " + list.get(i).getUserId());
 			}
 		}
 
@@ -376,7 +385,7 @@ public class UserRepository {
 
 		List<Friend> list = mybatis.selectList("LoginMapper.FriendMySelect", user_id);
 		for(int i = 0 ; i < list.size() ; i++) {
-			String user_idTemp = list.get(i).getUser_id(); // krdut1@gmail.com
+			String user_idTemp = list.get(i).getUserId(); // krdut1@gmail.com
 			String deleteId = list.get(i).getFriend();  // samdori96@nate.com&dhkdnxodzm@naver.com
 
 			deleteId = deleteId.replace(user_id, "");
@@ -485,9 +494,9 @@ public class UserRepository {
 		if(list.size() != 0) {
 			for(int i = 0; i<list.size(); i++) {
 				if(i != list.size() - 1) {
-					result += list.get(i).getUser_id()+"&";
+					result += list.get(i).getUserId()+"&";
 				}else {
-					result += list.get(i).getUser_id();
+					result += list.get(i).getUserId();
 				}
 			}
 			return result;
@@ -517,9 +526,7 @@ public class UserRepository {
 	}
 
 	public String sendSMS(String phone_number, String certNum, String device_id, HashMap<String, String> params) {
-		String api_key = "NCSDSJDNIALLOOF0";
-        String api_secret = "2TOIAXY6SXFHDHF5637A4OCBZAJXNIPQ";
-        Message coolsms = new Message(api_key, api_secret);
+        Message coolsms = new Message(smsApiKey, smsApiSecret);
 
 		int result = 0;
 		int count;

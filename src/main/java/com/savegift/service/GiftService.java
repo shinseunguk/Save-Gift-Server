@@ -8,12 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.savegift.repository.GiftRepository;
 import com.savegift.domain.Gift;
 import com.savegift.domain.GiftUserDevice;
 
 @Service("GiftService")
+@Transactional
 public class GiftService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(GiftService.class);

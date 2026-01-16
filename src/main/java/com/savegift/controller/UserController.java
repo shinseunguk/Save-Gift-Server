@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,24 +25,32 @@ import com.savegift.service.NotificationService;
 import com.savegift.service.UserService;
 import com.savegift.domain.User;
 import com.savegift.domain.Friend;
-import com.savegift.util.SHA256Util;
+import com.savegift.util.SecurityUtil;
 
 
 /**
- * Handles requests for the application home page. git test gt
+ * Handles requests for the application home page.
  */
 @Controller
+@PropertySource("classpath:datasource.properties")
 public class UserController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
-	NotificationService notificationService; 
-	
-    SHA256Util sha256Util = new SHA256Util();
+	NotificationService notificationService;
+
+	@Autowired
+	SecurityUtil securityUtil;
+
+	@Value("${security.password.prefix}")
+	private String passwordPrefix;
+
+	@Value("${security.password.suffix}")
+	private String passwordSuffix;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -102,17 +112,14 @@ public class UserController {
         String name = (String) requestMap.get("name"); // 이름
         String phone_number =(String)  requestMap.get("phone_number"); // 휴대폰 번호
         
-        //SHA256으로 암호화된 비밀번호
+        // SHA256으로 암호화된 비밀번호
 		try {
-			String cryptogram = sha256Util.encrypt((String) requestMap.get("user_password"));
-			requestMap.put("user_password", "fewnlwll3k2lnkqq"+cryptogram+"mmlwen5i4v3bbdui2");
+			String cryptogram = securityUtil.encryptSHA256((String) requestMap.get("user_password"));
+			requestMap.put("user_password", passwordPrefix + cryptogram + passwordSuffix);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			logger.info("error ", e);
-			e.printStackTrace();
+			logger.error("Password encryption error", e);
 		}
-//		fewnlwll3k2lnkqq85ba64cb70cf7296c14420d58259b038840d7ebcc54937867a4345112779ab83mmlwen5i4v3bbdui2
-//        logger.info("userInfo2 ####" + requestMap.toString());
+
         int result = userService.register(requestMap);
         
         if (result == 1){ //insert 성공(회원가입 성공)
@@ -139,16 +146,14 @@ public class UserController {
 		}
         
         
-        //SHA256으로 암호화된 비밀번호
+        // SHA256으로 암호화된 비밀번호
 		try {
-			String cryptogram = sha256Util.encrypt((String) requestMap.get("user_password"));
-			requestMap.put("user_password", "fewnlwll3k2lnkqq"+cryptogram+"mmlwen5i4v3bbdui2");
+			String cryptogram = securityUtil.encryptSHA256((String) requestMap.get("user_password"));
+			requestMap.put("user_password", passwordPrefix + cryptogram + passwordSuffix);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			logger.info("error ", e);
-			e.printStackTrace();
+			logger.error("Password encryption error", e);
 		}
-		
+
         result = userService.login(requestMap);
 		
 		return result;
@@ -371,9 +376,9 @@ public class UserController {
 			
 			for(int i = 0 ; i < list2.size() ; i++) {
 				if(i != list2.size()-1) {
-					returnString += list2.get(i).getUser_id()+"&";
+					returnString += list2.get(i).getUserId()+"&";
 				} else{
-					returnString += list2.get(i).getUser_id()+"#";
+					returnString += list2.get(i).getUserId()+"#";
 				}
 			}
 			
@@ -469,16 +474,14 @@ public class UserController {
 		
 		map.put("user_id", user_id);
 		
-		//SHA256으로 암호화된 비밀번호
+		// SHA256으로 암호화된 비밀번호
 		try {
-			String cryptogram = sha256Util.encrypt((String) requestMap.get("user_password"));
-			map.put("user_password", "fewnlwll3k2lnkqq"+cryptogram+"mmlwen5i4v3bbdui2");
+			String cryptogram = securityUtil.encryptSHA256((String) requestMap.get("user_password"));
+			map.put("user_password", passwordPrefix + cryptogram + passwordSuffix);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			logger.info("error ", e);
-			e.printStackTrace();
+			logger.error("Password encryption error", e);
 		}
-		
+
 		result = userService.userinfoPassword(map);
 		
 		return result;
